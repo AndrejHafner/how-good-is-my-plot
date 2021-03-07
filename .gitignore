@@ -281,3 +281,5 @@ TSWLatexianTemp*
 #*Notes.bib
 
 .idea
+src/plot-scrapping/google-scrapper/env.py
+src/plot-scrapping/google-scrapper/downloaded
