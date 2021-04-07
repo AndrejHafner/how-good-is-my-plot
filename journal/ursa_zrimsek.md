@@ -15,4 +15,7 @@ further. Before the meeting I prepared the talking points and our questions.
 *6. (2h): Studied options for plot type classification. Decided to use pytorch pretrained CNNs, which we can use for 
 embeddings of the plot images, to then further classify them based on cosine distance or with SVM. If that won't work well, 
 we can finetune the CNNs and classify directly with them.
-*7. (2h): Made embeddings of images scraped from Google. I used ResNet101 trained on ImageNet.
+*7. (5h): Made embeddings of images scraped from Google. I used ResNet101 trained on ImageNet.
+Prepared code for fine-tuning ResNet101 to classify between the types of plots. For fine-tuning we first need more data,
+then we can try to classify the plots directly with the trained net, or we can take the embeddings from it and train 
+another classifier.
