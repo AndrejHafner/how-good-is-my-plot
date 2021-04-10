@@ -283,3 +283,5 @@ TSWLatexianTemp*
 .idea
 src/plot-scrapping/google-scrapper/env.py
 src/plot-scrapping/google-scrapper/downloaded
+
+__pycache__
