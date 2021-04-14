@@ -281,9 +281,14 @@ TSWLatexianTemp*
 #*Notes.bib
 
 .idea
+__pycache__
 
 src/plot_scrapping/google_scrapper/env.py
 src/plot_scrapping/google_scrapper/downloaded
 src/plot_scrapping/duckduckgo_scrapper/downloaded
 
-__pycache__
+src/plot_type_classification/embeddings
+src/plot_type_classification/data
+src/plot_type_classification/cnn_weights
+
+src/ul_thesis_scrapper/chromedriver.exe

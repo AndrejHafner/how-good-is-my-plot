@@ -65,7 +65,7 @@ def make_embeddings(path, n_classes):
         for i in range(len(ids_n)):
             embeddings[ids_n[i]].append(emb[i])
 
-    joblib.dump(embeddings, f"embeddings.joblib")
+    joblib.dump(embeddings, f"embeddings/embeddings.joblib")
 
 
 def embeddings_to_dataframe(embeddings_file):
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     n_classes = 7
     # make_embeddings('./data', n_classes)
 
-    df = embeddings_to_dataframe('embeddings.joblib')
+    df = embeddings_to_dataframe('embeddings/embeddings.joblib')
 
     X = df.iloc[:, 2:].values
     y = df['class'].values
