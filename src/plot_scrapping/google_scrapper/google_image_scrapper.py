@@ -1,7 +1,7 @@
 from google_images_search import GoogleImagesSearch
 from env import *
 from pathlib import Path
-from utils import remove_corrupted_images, remove_file_type, save_json_metadata
+from src.plot_scrapping.utils import remove_corrupted_images, remove_file_type, save_json_metadata
 
 
 def google_image_download(query, download_folder):
@@ -10,7 +10,7 @@ def google_image_download(query, download_folder):
     # define search params:
     _search_params = {
         'q': query,
-        'num': 200,
+        'num': 100,
         # 'safe': 'high|medium|off',
         'fileType': 'jpg|gif|png',
         # 'imgType': 'clipart|face|lineart|news|photo',
@@ -34,7 +34,8 @@ def google_image_download(query, download_folder):
 
 
 if __name__ == '__main__':
-    download_folder = "./downloaded/scatter_plot"
-    query = "scatter plot, scatter chart, scatterplot, scatter diagram"
+    download_folder = "./downloaded/bar_plot"
+    query = "bar plot", # bar plot, histogram
+    # query = "scatter plot, scatter chart, scatter diagram"
     google_image_download(query, download_folder)
     remove_corrupted_images(download_folder)
