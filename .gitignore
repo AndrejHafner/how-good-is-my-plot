@@ -291,4 +291,5 @@ src/plot_type_classification/embeddings
 src/plot_type_classification/data
 src/plot_type_classification/cnn_weights
 
-src/ul_thesis_scrapper/chromedriver.exe
+src/plot_scrapping/ul_thesis_scrapper/chromedriver.exe
+src/plot_scrapping/pdf_image_extraction/pdfs
