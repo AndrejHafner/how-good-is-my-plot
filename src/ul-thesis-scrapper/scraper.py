@@ -28,6 +28,7 @@ def get_files( files ):
     # Accept the cookies, because the cookie bar overflows some elements
     cookies = driver.find_element_by_class_name( 'eucookielaw-accept' )
     cookies.click()
+    driver.execute_script("window.scrollTo(0, 1080)")
     accept = driver.find_element_by_name( 'shrani' )
     accept.click()
     driver.back()
@@ -51,11 +52,11 @@ def get_files( files ):
     driver.close()
 
 def download_pdf(driver, filename, name, myfile, newPage = False):
-    if not os.path.isdir(f'./FRI/{filename}/{name}'):
+    if not os.path.isdir(f'D:/project/FRI/{filename}/{name}'):
         print(name)
-        os.makedirs(f'./FRI/{filename}/{name}')
+        os.makedirs(f'D:/project/FRI/{filename}/{name}')
         print("   dir done, writing ...")
-        open(f'./FRI/{filename}/{name}/{name}.pdf', 'wb').write(myfile.content)
+        open(f'D:/project/FRI/{filename}/{name}/{name}.pdf', 'wb').write(myfile.content)
         print("      wroted")
 
         if newPage:
@@ -65,7 +66,7 @@ def download_pdf(driver, filename, name, myfile, newPage = False):
         # get meta data xml file
         print("   get metadata ...")
         metaData = driver.find_element_by_css_selector("[href^='Export.php']")
-        wget.download(metaData.get_attribute('href'), f'./FRI/{filename}/{name}/metaData.xml')
+        wget.download(metaData.get_attribute('href'), f'D:/project/FRI/{filename}/{name}/metaData.xml')
         print("      DONE")
     else:
         print("ALREADY STORED")
@@ -77,8 +78,8 @@ def download_pdf(driver, filename, name, myfile, newPage = False):
 
 def get_pdfs( driver, filename, TIMEOUT=5):
     #the default path where pdfs will be stored
-    if not os.path.isdir(f'./FRI/{filename}'):
-        os.makedirs(f'./FRI/{filename}')
+    if not os.path.isdir(f'D:/project/FRI/{filename}'):
+        os.makedirs(f'D:/project/FRI/{filename}')
 
     all_hits = int( driver.find_element_by_class_name( 'StZadetkov' ).text.split()[0] )
     print(f"ALLHITs: {all_hits}")
