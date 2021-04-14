@@ -7,7 +7,7 @@ from pathlib import Path
 from tqdm import tqdm
 from io import BytesIO
 from PIL import Image
-
+from src.plot_scrapping.utils import save_json_metadata
 
 class DuckduckgoImageSearch:
 
@@ -104,6 +104,7 @@ if __name__ == '__main__':
 
     for idx, (data, image) in enumerate(image_search.download_images_gen()):
         image.save(os.path.join(dir, f"{idx}.jpeg"))
+        save_json_metadata(dir, str(idx), {"url": data["image"], "name": str(idx)})
 
 
 
