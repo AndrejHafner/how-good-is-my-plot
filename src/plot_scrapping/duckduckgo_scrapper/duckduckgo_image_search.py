@@ -97,6 +97,7 @@ class DuckduckgoImageSearch:
 if __name__ == '__main__':
     query = "scatter plot, scatter chart"
     dir = "./downloaded/scatter_plot"
+    
     Path(dir).mkdir(parents=True, exist_ok=True)
 
     image_search = DuckduckgoImageSearch()
@@ -105,65 +106,3 @@ if __name__ == '__main__':
     for idx, (data, image) in enumerate(image_search.download_images_gen()):
         image.save(os.path.join(dir, f"{idx}.jpeg"))
         save_json_metadata(dir, str(idx), {"url": data["image"], "name": str(idx)})
-
-
-
-
-# def search(keywords, max_results=None):
-#     url = 'https://duckduckgo.com/'
-#
-#     #   First make a request to above URL, and parse out the 'vqd'
-#     #   This is a special token, which should be used in the subsequent request
-#     res = requests.post(url, data=params)
-#     searchObj = re.search(r'vqd=([\d-]+)\&', res.text, re.M|re.I)
-#
-#     if not searchObj:
-#         print("Couldn't find vqd token. Exiting.")
-#         exit(-1)
-#
-#     return searchObj.group(1)
-#
-#
-#     headers = {
-#         'authority': 'duckduckgo.com',
-#         'accept': 'application/json, text/javascript, */* q=0.01',
-#         'sec-fetch-dest': 'empty',
-#         'x-requested-with': 'XMLHttpRequest',
-#         'user-agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36',
-#         'sec-fetch-site': 'same-origin',
-#         'sec-fetch-mode': 'cors',
-#         'referer': 'https://duckduckgo.com/',
-#         'accept-language': 'en-US,enq=0.9',
-#     }
-#
-#     params = (
-#         ('l', 'us-en'),
-#         ('o', 'json'),
-#         ('q', keywords),
-#         ('vqd', searchObj.group(1)),
-#         ('f', ',,,'),
-#         ('p', '1'),
-#         ('v7exp', 'a'),
-#     )
-#
-#     requestUrl = url + "i.js"
-#
-#
-#     while True:
-#         while True:
-#             try:
-#                 res = requests.get(requestUrl, headers=headers, params=params)
-#                 data = json.loads(res.text)
-#                 break
-#             except ValueError as e:
-#                 time.sleep(5)
-#                 continue
-#
-#
-#         if "next" not in data:
-#             exit(0)
-#
-#         requestUrl = url + data["next"]
-#
-#
-# search("audi q6")
