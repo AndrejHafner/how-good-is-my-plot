@@ -97,6 +97,7 @@ class DuckduckgoImageSearch:
 if __name__ == '__main__':
     query = "scatter plot, scatter chart"
     dir = "./downloaded/scatter_plot"
+    
     Path(dir).mkdir(parents=True, exist_ok=True)
 
     image_search = DuckduckgoImageSearch()
