@@ -6,11 +6,11 @@ from pathlib import Path
 from utils import image_resize
 
 def perform_action(key, file, dir, deleted_dir):
-    if key == 13: # enter - continue
+    if key == 13:  # enter - continue
         return True
-    elif key == 113: # q - delete
+    elif key == 113:  # q - delete
         os.remove(os.path.join(dir, file))
-        metadata_file = file.replace(".jpeg", ".json")
+        metadata_file = file.replace(".jpeg", ".json").replace(".jpg", ".json")
         shutil.move(os.path.join(dir, metadata_file), os.path.join(deleted_dir, metadata_file))
 
         print(f"Deleted file: {file}")
@@ -23,12 +23,12 @@ def perform_action(key, file, dir, deleted_dir):
 
 if __name__ == '__main__':
     # !IMPORTANT! Rename these two directories before cleaning!
-    dir = "./duckduckgo_scrapper/downloaded/scatter_plot"
-    deleted_dir = "./duckduckgo_scrapper/downloaded/deleted/scatter_plot"
+    dir = "D:/project/plots_google/violin_plot"
+    deleted_dir = "D:/project/plots_google/deleted/violin_plot"
 
     Path(deleted_dir).mkdir(parents=True, exist_ok=True)
 
-    files = [file for file in os.listdir(dir) if ".jpeg" in file]
+    files = [file for file in os.listdir(dir) if ".jpg" in file]
     for idx, file in enumerate(files):
         img = cv2.imread(os.path.join(dir, file))
         img_resized = image_resize(img, height=900)

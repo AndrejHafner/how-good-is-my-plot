@@ -9,6 +9,7 @@ from io import BytesIO
 from PIL import Image
 from src.plot_scrapping.utils import save_json_metadata
 
+
 class DuckduckgoImageSearch:
 
     def __init__(self):
@@ -59,8 +60,6 @@ class DuckduckgoImageSearch:
             print(f"\nFailed to download image. Url: {url}")
         return None
 
-
-
     def fetch_token(self, keywords):
         response = requests.post(self.url, data={'q': keywords})
         re_search_res = re.search(r'vqd=([\d-]+)\&', response.text, re.M | re.I)
@@ -94,14 +93,22 @@ class DuckduckgoImageSearch:
             ('v7exp', 'a'),
         )
 
+
 if __name__ == '__main__':
-    query = "scatter plot, scatter chart"
-    dir = "./downloaded/scatter_plot"
-    
+    # query = "scatter plot, scatter chart"
+    # query = "histogram"
+    # query = "bar plot, bar chart, bar graph"
+    # query = "violin plot"
+    # query = "line plot, line chart, line graph, curve chart"
+    # query = "box plot, boxplot"
+    query = "pie chart, circle chart"
+    dir = "D:/project/plots_duckduckgo/pie_chart"
+    max_results = 500
+
     Path(dir).mkdir(parents=True, exist_ok=True)
 
     image_search = DuckduckgoImageSearch()
-    image_search.search(query, max_results=500)
+    image_search.search(query, max_results=max_results)
 
     for idx, (data, image) in enumerate(image_search.download_images_gen()):
         image.save(os.path.join(dir, f"{idx}.jpeg"))
