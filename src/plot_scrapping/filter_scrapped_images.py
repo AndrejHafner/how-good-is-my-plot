@@ -22,7 +22,7 @@ def perform_action(key, file, dir, deleted_dir):
 
 
 if __name__ == '__main__':
-    # !IMPORTANT! Rename these two directories before cleaning
+    # !IMPORTANT! Rename these two directories before cleaning!
     dir = "./duckduckgo_scrapper/downloaded/scatter_plot"
     deleted_dir = "./duckduckgo_scrapper/downloaded/deleted/scatter_plot"
 
