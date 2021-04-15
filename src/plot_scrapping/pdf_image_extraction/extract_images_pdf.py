@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup, Tag
 from functools import reduce
 from src.plot_scrapping.utils import save_json_metadata
 from tqdm import  tqdm
+from PIL import Image
+from io import BytesIO
 
 
 def extract_images_pdf(filename):
@@ -15,10 +17,11 @@ def extract_images_pdf(filename):
         for img in doc.getPageImageList(i):
             xref = img[0]
             pix = fitz.Pixmap(doc, xref)
-
             if pix.n >= 5:       # this is GRAY or RGB
-                yield fitz.Pixmap(fitz.csRGB, pix)
-            yield pix
+                pix = fitz.Pixmap(fitz.csRGB, pix)
+
+            data = BytesIO(pix.getImageData())
+            yield Image.open(data)
 
 def parse_metadata(file_path, type):
     with open(file_path, "r") as f:
@@ -35,12 +38,24 @@ def parse_metadata(file_path, type):
                 "url": url,
                 "type": type}
 
+def resize_image(img, side_length):
+    if img.height < side_length or img.width < side_length:
+        return img
+
+    if img.height > img.width: # Set width to side length and keep aspect ratio
+        scale_ratio = side_length / img.width
+        new_height  = round(img.height * scale_ratio)
+        return img.resize((side_length, new_height))
+    else:  # Set height to side length and keep aspect ratio
+        scale_ratio = side_length / img.height
+        new_width  = round(img.width * scale_ratio)
+        return img.resize((new_width, side_length))
 
 if __name__ == '__main__':
     src_dir = "./pdfs/fri_diplome"
     dst_dir = "./extracted_images/fri_bachelor_thesis"
     type_of_work = "bachelor_thesis"
-
+    image_side_length = 480
 
     Path(dst_dir).mkdir(parents=True, exist_ok=True)
     index = 0
@@ -51,7 +66,8 @@ if __name__ == '__main__':
 
         for image in extract_images_pdf(os.path.join(src_dir, folder, pdf_filename)):
             try:
-                image.writeImage(os.path.join(dst_dir, f"{index}.jpeg"))
+                resized_image = resize_image(image, image_side_length)
+                resized_image.save(os.path.join(dst_dir, f"{index}.jpeg"))
                 save_json_metadata(dst_dir, f"{index}", metadata)
                 index += 1
             except:
