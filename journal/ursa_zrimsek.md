@@ -20,3 +20,7 @@ Prepared code for fine-tuning ResNet101 to classify between the types of plots. 
 then we can try to classify the plots directly with the trained net, or we can take the embeddings from it and train 
 another classifier.
 * 14\. (3h): Downloaded and cleaned images from Google and DuckDuckGo.
+* 15\. (3h): Brainstorming for questionnaire. Extracting images from FRI bachelor thesis. Enabled fine 
+tuning on Google Colab.
+* 16\. (1h): Discarded small images. Filtered extracted images to build a dataset for 8th class - not a plot. With it we
+will try to classify all the extracted images directly with CNN.
