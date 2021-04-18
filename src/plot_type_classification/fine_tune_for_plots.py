@@ -94,10 +94,18 @@ def initialize_model(num_classes, use_pretrained=True):
     return model_ft, input_size
 
 
+# FOR GOOGLE COLAB
+# from drive.MyDrive.how_good_is_my_plot.fine_tune_for_plots import train_model, initialize_model
+#
+# # Data directory on which you want to train the model
+# data_dir = "drive/MyDrive/how_good_is_my_plot/data"
+
+
 if __name__ == '__main__':
 
     # Data directory on which you want to train the model
     data_dir = "./data/proba"
+
 
     # Number of classes in the dataset
     num_classes = 7
