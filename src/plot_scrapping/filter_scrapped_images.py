@@ -15,7 +15,7 @@ def perform_action(key, file, dir, deleted_dir):
 
         print(f"Deleted file: {file}")
         return True
-    elif key == 27: # esc - quit
+    elif key == 27:  # esc - quit
         exit(-1)
     else:
         return False

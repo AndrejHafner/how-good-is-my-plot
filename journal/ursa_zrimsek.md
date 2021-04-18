@@ -21,6 +21,8 @@ then we can try to classify the plots directly with the trained net, or we can t
 another classifier.
 * 14\. (3h): Downloaded and cleaned images from Google and DuckDuckGo.
 * 15\. (3h): Brainstorming for questionnaire. Extracting images from FRI bachelor thesis. Enabled fine 
-tuning on Google Colab.
+tuning on Google Colab. On 7 classes of plots we achieved 93% accuracy on validation set with ResNet101.
 * 16\. (1h): Discarded small images. Filtered extracted images to build a dataset for 8th class - not a plot. With it we
 will try to classify all the extracted images directly with CNN.
+* 18\. (1h): Selected random images for train and validation set for the not_plot class. Fine tuned ResNet101 and 
+achieved the same accuracy as with 7 classes - we could also try taking a bigger dataset for non-plots. 

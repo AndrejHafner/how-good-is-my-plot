@@ -20,3 +20,4 @@ for file in files:
         if os.path.exists(os.path.join(dir, json)):
             os.remove(os.path.join(dir, json))
 
+

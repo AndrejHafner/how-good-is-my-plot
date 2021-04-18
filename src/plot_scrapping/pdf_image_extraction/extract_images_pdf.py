@@ -29,6 +29,7 @@ def extract_images_pdf(filename):
                 print(f"Error extracting image from: {filename}")
                 continue
 
+
 def parse_metadata(file_path, type):
     try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -48,6 +49,7 @@ def parse_metadata(file_path, type):
         print(f"Failed metadata parsing for: {file_path}")
         return None
 
+
 def resize_image(img, side_length):
     if img.height < side_length or img.width < side_length:
         return img
@@ -60,6 +62,7 @@ def resize_image(img, side_length):
         scale_ratio = side_length / img.height
         new_width  = round(img.width * scale_ratio)
         return img.resize((new_width, side_length))
+
 
 if __name__ == '__main__':
     src_dir = "D:/project/FRI/diplome FRI"
