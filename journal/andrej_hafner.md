@@ -15,4 +15,4 @@
 * 7\. (3h): Implemented Google image downloading and cleaning through the Google Custom Search API. Unfortunately the API only limits the search to the first 100 results, which prevents us to scrape many images. Nevertheless, it is a good option for collecting good examples to start training our model for plot classification.
 * 10\. (3h): Due to lack of images from the Google Custom Search api, I implemented querying the DuckDuckGo API for images results. The API is open for use, without any limitations. I implemented searching and downloading of images and metadata saving. We downloaded 500 images from querying of each statistical graph (7 classes).
 * 14\. (5h): Created a tool for filtering of the images retrieved from Google and DuckDuckGo. Many of the search results contained images that were irrelevant of the query and we needed a fast way to filter them. I also created a script for extracting the images and metadata from the scrapped UL FRI final works (bachelors, masters, doctorates), which will enable us to create larger datasets.
-
+* 15\. (3h):

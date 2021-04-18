@@ -294,3 +294,4 @@ src/plot_type_classification/cnn_weights
 src/plot_scrapping/ul_thesis_scrapper/chromedriver.exe
 src/plot_scrapping/pdf_image_extraction/pdfs
 src/plot_scrapping/pdf_image_extraction/extracted_images
+
