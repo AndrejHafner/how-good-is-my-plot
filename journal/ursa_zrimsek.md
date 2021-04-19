@@ -24,5 +24,8 @@ another classifier.
 tuning on Google Colab. On 7 classes of plots we achieved 93% accuracy on validation set with ResNet101.
 * 16\. (1h): Discarded small images. Filtered extracted images to build a dataset for 8th class - not a plot. With it we
 will try to classify all the extracted images directly with CNN.
-* 18\. (1h): Selected random images for train and validation set for the not_plot class. Fine tuned ResNet101 and 
-achieved the same accuracy as with 7 classes - we could also try taking a bigger dataset for non-plots. 
+* 18\. (2h): Selected random images for train and validation set for the not_plot class. Fine tuned ResNet101 and 
+achieved the same accuracy as with 7 classes - we could also try taking a bigger dataset for non-plots. Meeting with 
+teammates about questionnaires.
+* 19\. (4h): Implemented classification with CNN trained as described above. There is an option of showing the images 
+together with predicted probabilities.
