@@ -27,5 +27,7 @@ will try to classify all the extracted images directly with CNN.
 * 18\. (2h): Selected random images for train and validation set for the not_plot class. Fine tuned ResNet101 and 
 achieved the same accuracy as with 7 classes - we could also try taking a bigger dataset for non-plots. Meeting with 
 teammates about questionnaires.
-* 19\. (4h): Implemented classification with CNN trained as described above. There is an option of showing the images 
-together with predicted probabilities.
+* 19\. (5h 30min): Implemented classification with CNN trained as described above. There is an option of showing the 
+images together with predicted probabilities. Copied first 1000 images into predicted classes, depending on how sure the
+algorithm was in the predictions (>99% / >90% / not sure). For better learning we should filter them again by hand and 
+add more training images on which it was wrong or not sure.
