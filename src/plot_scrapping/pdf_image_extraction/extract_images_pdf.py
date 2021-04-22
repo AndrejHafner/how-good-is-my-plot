@@ -65,9 +65,10 @@ def resize_image(img, side_length):
 
 
 if __name__ == '__main__':
-    src_dir = "D:/project/FRI/diplome FRI"
-    dst_dir = "D:/project/extracted_images/test"
-    type_of_work = "bachelor_thesis"
+    src_dir = "D:/project/FRI/druga gradiva FRI"
+    dst_dir = "D:/project/extracted_images/fri_other"
+    type_of_work = "fri_other"
+
     image_side_length = 480
 
     Path(dst_dir).mkdir(parents=True, exist_ok=True)

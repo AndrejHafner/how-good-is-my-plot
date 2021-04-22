@@ -13,11 +13,11 @@ import copy
 def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25):
     since = time.time()
 
-    train_acc_history = []
-    val_acc_history = []
+    train_loss_history = []
+    val_loss_history = []
 
     best_model_wts = copy.deepcopy(model.state_dict())
-    best_acc = 0.0
+    best_loss = 0.0
 
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
@@ -65,23 +65,23 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25)
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             # deep copy the model
-            if phase == 'val' and epoch_acc > best_acc:
-                best_acc = epoch_acc
+            if phase == 'val' and epoch_loss < best_loss:
+                best_loss = epoch_loss
                 best_model_wts = copy.deepcopy(model.state_dict())
             if phase == 'val':
-                val_acc_history.append(epoch_acc.cpu().detach().item())
+                val_loss_history.append(epoch_loss.cpu().detach().item())
             else:
-                train_acc_history.append(epoch_acc.cpu().detach().item())
+                train_loss_history.append(epoch_loss.cpu().detach().item())
 
         print()
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
-    print('Best val Acc: {:4f}'.format(best_acc))
+    print('Best val Loss: {:4f}'.format(best_loss))
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    return model, train_acc_history, val_acc_history
+    return model, train_loss_history, val_loss_history
 
 
 def initialize_model(num_classes, use_pretrained=True):

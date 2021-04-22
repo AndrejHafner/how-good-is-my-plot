@@ -76,12 +76,12 @@ if __name__ == '__main__':
     copy_images = True
 
     model_name = "resnet101"
-    saved_model = "cnn_weights/resnet101_ft_class_notplot2_slr.pth"
+    saved_model = "cnn_weights/resnet101_phase2.pth"
 
-    images_path = "D:/project/extracted_images/fri_bachelor_thesis"
-    nr_of_images = 1000
+    images_path = "D:/project/extracted_images/fri_master_thesis"
+    nr_of_images = None
 
-    filtered_images_path = "D:/project/filtered_images"
+    filtered_images_path = "D:/project/filtered_master"
 
     num_classes = 8
     class_dict = {0: 'bar_plot', 1: 'box_plot', 2: 'histogram', 3: 'line_plot', 4: 'not_plot', 5: 'pie_chart',
@@ -118,17 +118,23 @@ if __name__ == '__main__':
         file_path = os.path.join(images_path, filename)
 
         predicted_class = class_dict[predicted_ids[0]]
+        prob = probabilities[predicted_ids[0]]
 
-        if probabilities[predicted_ids[0]] > 0.99:
-            if predicted_class != 'not_plot':
-                shutil.copy(file_path, os.path.join(filtered_images_path, "sure", predicted_class, filename))
+        if copy_images:
+            if prob > 0.99:
+                if predicted_class != 'not_plot':
+                    shutil.copy(file_path, os.path.join(filtered_images_path, "sure", predicted_class,
+                                                        f"{round(prob*100)}_fribt_" + filename))
 
-        elif probabilities[predicted_ids[0]] > 0.9:
-            shutil.copy(file_path, os.path.join(filtered_images_path, "almost_sure", predicted_class, filename))
+            elif prob > 0.9:
+                shutil.copy(file_path, os.path.join(filtered_images_path, "almost_sure", predicted_class,
+                                                    f"{round(prob*100)}_fribt_" + filename))
 
-        else:
-            if predicted_class == 'not_plot':
-                shutil.copy(file_path, os.path.join(filtered_images_path, "not_sure/not_plot", filename))
             else:
-                shutil.copy(file_path, os.path.join(filtered_images_path, "not_sure", filename))
+                if predicted_class == 'not_plot':
+                    shutil.copy(file_path, os.path.join(filtered_images_path, "not_sure/not_plot",
+                                                        f"{class_dict[predicted_ids[1]]}_not_{round(prob*100)}_fribt_" + filename))
+                else:
+                    shutil.copy(file_path, os.path.join(filtered_images_path, "not_sure",
+                                                        f"{predicted_class}_{round(prob*100)}_fribt_" + filename))
 
