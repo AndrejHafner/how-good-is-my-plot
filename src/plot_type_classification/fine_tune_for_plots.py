@@ -14,7 +14,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25)
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
-    best_loss = 0.0
+    best_loss = 1e10
 
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
@@ -27,7 +27,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25)
             else:
                 model.eval()   # Set model to evaluate mode
 
-            running_loss = 0.0
+            running_loss = 0
             running_corrects = 0
 
             # Iterate over data.

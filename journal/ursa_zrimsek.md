@@ -36,6 +36,6 @@ to correct categories in training set. Extracted images from masters and phd the
 * 21\. (1h 30min): Discussion with teammates about the first questionnaire. Further training of the CNN. Observing the
 predictions on the first 2000 images - it worked almost perfectly (because the hard images were already in the training 
 set). Run the filtering on the whole batchelor thesis dataset.
-* 22\. (5h): Observing predictions on the whole dataset. Writing report. Corrected the training to select the model with
-the best loss, not the best accuracy. Overviewing report and discussing questionnaires.
+* 22\. (9h): Observing predictions on the whole dataset. Writing report. Corrected the training to select the model with
+the best loss, not the best accuracy. Overviewing report and discussing questionnaires. Building questionnaires.
 
