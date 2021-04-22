@@ -13,9 +13,6 @@ import copy
 def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25):
     since = time.time()
 
-    train_loss_history = []
-    val_loss_history = []
-
     best_model_wts = copy.deepcopy(model.state_dict())
     best_loss = 0.0
 
@@ -68,10 +65,6 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25)
             if phase == 'val' and epoch_loss < best_loss:
                 best_loss = epoch_loss
                 best_model_wts = copy.deepcopy(model.state_dict())
-            if phase == 'val':
-                val_loss_history.append(epoch_loss.cpu().detach().item())
-            else:
-                train_loss_history.append(epoch_loss.cpu().detach().item())
 
         print()
 
@@ -81,7 +74,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25)
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    return model, train_loss_history, val_loss_history
+    return model
 
 
 def initialize_model(num_classes, use_pretrained=True):
@@ -106,15 +99,14 @@ if __name__ == '__main__':
     # Data directory on which you want to train the model
     data_dir = "./data/proba"
 
-
     # Number of classes in the dataset
-    num_classes = 7
+    num_classes = 8
 
     # Batch size for training (change depending on how much memory you have)
-    batch_size = 20
+    batch_size = 48
 
     # Number of epochs to train for  -> can leave this on 50 - the model with best validation accuracy will be saved.
-    num_epochs = 10
+    num_epochs = 50
 
     # Initialize the model for this run
     model_ft, input_size = initialize_model(num_classes, use_pretrained=True)
@@ -151,18 +143,14 @@ if __name__ == '__main__':
     params_to_update = model_ft.parameters()
 
     # you can change learning rate here
-    learning_rate = 0.01
+    learning_rate = 0.0001
     optimizer_ft = optim.Adam(params_to_update, lr=learning_rate)
 
     # Setup the loss fxn
     criterion = nn.CrossEntropyLoss()
 
     # Train and evaluate
-    model_ft, train_hist, val_hist = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, device,
-                                                 num_epochs=num_epochs)
+    model_ft = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, device, num_epochs=num_epochs)
 
-    # 01 = 0.01, l4 = 0.0001
     torch.save(model_ft.state_dict(), f"cnn_weights/resnet101_ft.pth")
-
-    # joblib.dump([train_hist, val_hist], f"hist_{model_name}.joblib")
 
