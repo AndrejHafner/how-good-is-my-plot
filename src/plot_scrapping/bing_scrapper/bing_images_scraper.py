@@ -8,6 +8,11 @@ import os
 import time
 
 def download_images(name):
+    """
+    Download the image from the given URL
+    :param name: name of the query to search
+    """
+
     print("Beginning Selenium .....")
 
     # initializing chrome instances
@@ -102,6 +107,7 @@ def download_images(name):
     browser.close()
 
 if __name__ == "__main__":
+    # In queries_to_search list, write the queries you want to search
     queries_to_search = ["line plot", "box plot", "violin plot", "bar plot", "histogram", "scatter plot"]
 
     for query in queries_to_search:
