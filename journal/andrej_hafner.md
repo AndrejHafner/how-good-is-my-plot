@@ -10,7 +10,7 @@
 * 3\. (1h): Meeting with mentors and discussion about the project course. We decided to continue with scrapping of plots from different browsers on which we will build a classificator for different types (potentially one vs. all SVM). Discussion about the approaches on how to evaluate the quality of graphs.
 * 7\. (2h): Tested google image search through their custom search API. Used a library which also downloads all of the images from the search query. There are some problems with the library which i'll try to solve next time (errors when downloading certain images).
 
-## April 2021 (TODO)
+## April 2021 (28h)
 
 * 7\. (3h): Implemented Google image downloading and cleaning through the Google Custom Search API. Unfortunately the API only limits the search to the first 100 results, which prevents us to scrape many images. Nevertheless, it is a good option for collecting good examples to start training our model for plot classification.
 * 10\. (3h): Due to lack of images from the Google Custom Search api, I implemented querying the DuckDuckGo API for images results. The API is open for use, without any limitations. I implemented searching and downloading of images and metadata saving. We downloaded 500 images from querying of each statistical graph (7 classes).
@@ -18,3 +18,4 @@
 * 15\. (2h): Setup Google Collab to be used for training of CNN - connected with Google Drive.
 * 20\. (4h): Meeting with the team on current progress and then meeting with mentors. We discussed our progress and how to continue. In the next step, we'll create a short questionare on what people find visually important in graphs. Based on this information, we will select a few categories, which will be used for grading of the scrapped graphs. We will randomly select two plots and compare them in a selected category - for each category. This way we'll create a ranking of all the plots for each category, enable us to get the information what makes a plot good and what not. Also started working on the Google Forms questionnaire.
 * 22\. (7h): Created script for creating random heterogeneous and homogeneous comparisons, which will be used to visually compare two graphs. These will be used for the Mechanical Turk task and to get an estimate upon which categories people base their selection on. Wrote and check the intermediate report, created multiple questionnaires.
+* 23\. (4h): Commented and cleaned the code, fixed parts of the report. Merged the develop branch into master.
