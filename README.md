@@ -1,5 +1,3 @@
-# README #
-
 ## How good is my plot? ##
 
 Statistical plots are one of the basic tools, which a scientist can use to convey information. They are used and abused in many scientific works, and are unfortunately often not of a good quality. Therefore, the goal of our project is to develop a model that can find out what are the properties of a high-quality plot? The first thing that comes to mind is how well the plot presents the information in the data. 
