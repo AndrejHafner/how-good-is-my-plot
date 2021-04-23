@@ -4,8 +4,14 @@ import cv2
 
 from PIL import Image
 
+# Script containing utility functions
 
 def remove_corrupted_images(directory):
+    """
+    A function that tries to open images in a repository, if an error occurs we remove them (corrupted image files)
+    :param directory:  Target directory
+    :return:
+    """
     files = [file for file in os.listdir(directory) if ".json" not in file]
     for file in files:
         file_path = os.path.join(directory, file)
@@ -16,8 +22,15 @@ def remove_corrupted_images(directory):
             os.remove(file_path)
 
 
-def remove_file_type(filename):
-    file_endings = [".jpg", ".png", ".gif"]
+def remove_file_type(filename, file_endings=None):
+    """
+    Removes the file endings from the file
+    :param filename: String containing the filename
+    :return: Filename stripped of the file_endings
+    """
+
+    if file_endings is None:
+        file_endings = [".jpg", ".png", ".gif"]
     for f_ending in file_endings:
         filename = filename.replace(f_ending, "")
 
@@ -25,11 +38,27 @@ def remove_file_type(filename):
 
 
 def save_json_metadata(dir, filename, obj):
+    """
+    Save the object in JSON format to the given directory with the given filename
+    :param dir: Target directory
+    :param filename: Filename to store the JSON file to
+    :param obj: Data object
+    :return:
+    """
     with open(f"{os.path.join(dir, filename)}.json", "w") as f:
         json.dump(obj, f)
 
 
 def image_resize(image, width = None, height = None, inter = cv2.INTER_AREA):
+    """
+    Resize the image to the target width or height, respecting the original aspect ratio
+    :param image: Image to resize
+    :param width: Target width
+    :param height: Target height
+    :param inter: Interplation technique
+    :return: Resized image
+    """
+
     # initialize the dimensions of the image to be resized and
     # grab the image size
     dim = None

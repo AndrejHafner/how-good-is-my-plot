@@ -4,6 +4,8 @@ from pathlib import Path
 import shutil
 from tqdm import tqdm
 
+# A script that splits the dataset into a train and validation set
+
 if __name__ == '__main__':
     dir = "../data/plots"
     plot_dirs = os.listdir(dir)

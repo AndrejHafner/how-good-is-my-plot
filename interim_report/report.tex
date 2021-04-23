@@ -38,16 +38,16 @@
 %\Archive{Final report} 
 
 % Article title
-\PaperTitle{Data Science Project Competition Latex Template} 
+\PaperTitle{How good is my plot?} 
 
 % Authors (student competitors) and their info
-\Authors{John Doe, Jane Doe, and Mike Smith}
+\Authors{Maruša Oražem, Urša Zrimšek, Andrej Hafner}
 
 % Advisors
-\affiliation{\textit{Advisors: prof. Janez Novak, dr. Alica Kavčič}}
+\affiliation{\textit{Advisors: Assoc. Prof. dr. Erik Štrumbelj , Assoc. Prof. dr. Tomaž Curk}}
 
 % Keywords
-\Keywords{Keyword1, Keyword2, Keyword3 ...}
+\Keywords{visualizations, plots, quality perception}
 \newcommand{\keywordname}{Keywords}
 
 
@@ -55,184 +55,111 @@
 %	ABSTRACT
 %----------------------------------------------------------------------------------------
 
-\Abstract{
-The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here. The abstract goes here.
-}
+\Abstract{The goal of this project is to build a model that will evaluate the quality of the plot. We constructed a dataset of different plot types, from which we will gather the opinions on quality through a crowdsourcing platform. From these we plan to find the correspondences between visual properties and the evaluations. }
 
 %----------------------------------------------------------------------------------------
 
 \begin{document}
-
-% Makes all text pages the same height
-\flushbottom 
-
-% Print the title and abstract box
-\maketitle 
-
-% Removes page numbering from the first page
-\thispagestyle{empty} 
-
-%----------------------------------------------------------------------------------------
-%	ARTICLE CONTENTS
-%----------------------------------------------------------------------------------------
-
-\section*{Introduction}
-	These latex files are intended to serve as a the template for the FRI Data Science Project Competition. If you find mistakes in the template or have problems using it, please consult Jure Demšar (\href{mailto:jure.demsar@fri.uni-lj.si}{jure.demsar@fri.uni-lj.si}).
 	
-	In the Introduction section you should write about the relevance of your work (what is the purpose of the project, what will we solve) and about related work (what solutions for the problem already exist). Where appropriate, reference scientific work conducted by other researchers. For example, the work done by Demšar et al. \cite{Demsar2016BalancedMixture} is very important for our project. The abbreviation et al. is for et alia, which in latin means and others, we use this abbreviation when there are more than two authors of the work we are citing. If there are two authors (or if there is a single author) we just write down their surnames. For example, the work done by Demšar and Lebar Bajec \cite{Demsar2017LinguisticEvolution} is also important for successful completion of our project.
-
-
-%------------------------------------------------
-
-\section*{Methods}
-
-Use the Methods section to describe what you did an how you did it -- in what way did you prepare the data, what algorithms did you use, how did you test various solutions ... Provide all the required details for a reproduction of your work.
-
-Below are \LaTeX examples of some common elements that you will probably need when writing your report (e.g. figures, equations, lists, code examples ...).
-
-
-\subsection*{Equations}
-
-You can write equations inline, e.g. $\cos\pi=-1$, $E = m \cdot c^2$ and $\alpha$, or you can include them as separate objects. The Bayes’s rule is stated mathematically as:
-
-\begin{equation}
-	P(A|B) = \frac{P(B|A)P(A)}{P(B)},
-	\label{eq:bayes}
-\end{equation}
-
-where $A$ and $B$ are some events. You can also reference it -- the equation \ref{eq:bayes} describes the Bayes's rule.
-
-\subsection*{Lists}
-
-We can insert numbered and bullet lists:
-
-% the [noitemsep] option makes the list more compact
-\begin{enumerate}[noitemsep] 
-	\item First item in the list.
-	\item Second item in the list.
-	\item Third item in the list.
-\end{enumerate}
-
-\begin{itemize}[noitemsep] 
-	\item First item in the list.
-	\item Second item in the list.
-	\item Third item in the list.
-\end{itemize}
-
-We can use the description environment to define or describe key terms and phrases.
-
-\begin{description}
-	\item[Word] What is a word?.
-	\item[Concept] What is a concept?
-	\item[Idea] What is an idea?
-\end{description}
-
-
-\subsection*{Random text}
-
-This text is inserted only to make this template look more like a proper report. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam blandit dictum facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam convallis tellus velit, quis ornare ipsum aliquam id. Maecenas tempus mauris sit amet libero elementum eleifend. Nulla nunc orci, consectetur non consequat ac, consequat non nisl. Aenean vitae dui nec ex fringilla malesuada. Proin elit libero, faucibus eget neque quis, condimentum laoreet urna. Etiam at nunc quis felis pulvinar dignissim. Phasellus turpis turpis, vestibulum eget imperdiet in, molestie eget neque. Curabitur quis ante sed nunc varius dictum non quis nisl. Donec nec lobortis velit. Ut cursus, libero efficitur dictum imperdiet, odio mi fermentum dui, id vulputate metus velit sit amet risus. Nulla vel volutpat elit. Mauris ex erat, pulvinar ac accumsan sit amet, ultrices sit amet turpis.
-
-Phasellus in ligula nunc. Vivamus sem lorem, malesuada sed pretium quis, varius convallis lectus. Quisque in risus nec lectus lobortis gravida non a sem. Quisque et vestibulum sem, vel mollis dolor. Nullam ante ex, scelerisque ac efficitur vel, rhoncus quis lectus. Pellentesque scelerisque efficitur purus in faucibus. Maecenas vestibulum vulputate nisl sed vestibulum. Nullam varius turpis in hendrerit posuere.
-
-
-\subsection*{Figures}
-
-You can insert figures that span over the whole page, or over just a single column. The first one, \figurename~\ref{fig:column}, is an example of a figure that spans only across one of the two columns in the report.
-
-\begin{figure}[ht]\centering
-	\includegraphics[width=\linewidth]{single_column.pdf}
-	\caption{\textbf{A random visualization.} This is an example of a figure that spans only across one of the two columns.}
-	\label{fig:column}
-\end{figure}
-
-On the other hand, \figurename~\ref{fig:whole} is an example of a figure that spans across the whole page (across both columns) of the report.
-
-% \begin{figure*} makes the figure take up the entire width of the page
-\begin{figure*}[ht]\centering 
-	\includegraphics[width=\linewidth]{whole_page.pdf}
-	\caption{\textbf{Visualization of a Bayesian hierarchical model.} This is an example of a figure that spans the whole width of the report.}
-	\label{fig:whole}
-\end{figure*}
-
-
-\subsection*{Tables}
-
-Use the table environment to insert tables.
-
-\begin{table}[hbt]
-	\caption{Table of grades.}
-	\centering
-	\begin{tabular}{l l | r}
-		\toprule
-		\multicolumn{2}{c}{Name} \\
-		\cmidrule(r){1-2}
-		First name & Last Name & Grade \\
-		\midrule
-		John & Doe & $7.5$ \\
-		Jane & Doe & $10$ \\
-		Mike & Smith & $8$ \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:label}
-\end{table}
-
-
-\subsection*{Code examples}
-
-You can also insert short code examples. You can specify them manually, or insert a whole file with code. Please avoid inserting long code snippets, advisors will have access to your repositories and can take a look at your code there. If necessary, you can use this technique to insert code (or pseudo code) of short algorithms that are crucial for the understanding of the manuscript.
-
-\lstset{language=Python}
-\lstset{caption={Insert code directly from a file.}}
-\lstset{label={lst:code_file}}
-\lstinputlisting[language=Python]{code/example.py}
-
-\lstset{language=R}
-\lstset{caption={Write the code you want to insert.}}
-\lstset{label={lst:code_direct}}
-\begin{lstlisting}
-import(dplyr)
-import(ggplot)
-
-ggplot(diamonds,
-	   aes(x=carat, y=price, color=cut)) +
-  geom_point() +
-  geom_smooth()
-\end{lstlisting}
-
-%------------------------------------------------
-
-\section*{Results}
-
-Use the results section to present the final results of your work. Present the results in a objective and scientific fashion. Use visualisations to convey your results in a clear and efficient manner. When comparing results between various techniques use appropriate statistical methodology.
-
-\subsection*{More random text}
-
-This text is inserted only to make this template look more like a proper report. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam blandit dictum facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam convallis tellus velit, quis ornare ipsum aliquam id. Maecenas tempus mauris sit amet libero elementum eleifend. Nulla nunc orci, consectetur non consequat ac, consequat non nisl. Aenean vitae dui nec ex fringilla malesuada. Proin elit libero, faucibus eget neque quis, condimentum laoreet urna. Etiam at nunc quis felis pulvinar dignissim. Phasellus turpis turpis, vestibulum eget imperdiet in, molestie eget neque. Curabitur quis ante sed nunc varius dictum non quis nisl. Donec nec lobortis velit. Ut cursus, libero efficitur dictum imperdiet, odio mi fermentum dui, id vulputate metus velit sit amet risus. Nulla vel volutpat elit. Mauris ex erat, pulvinar ac accumsan sit amet, ultrices sit amet turpis.
-
-Phasellus in ligula nunc. Vivamus sem lorem, malesuada sed pretium quis, varius convallis lectus. Quisque in risus nec lectus lobortis gravida non a sem. Quisque et vestibulum sem, vel mollis dolor. Nullam ante ex, scelerisque ac efficitur vel, rhoncus quis lectus. Pellentesque scelerisque efficitur purus in faucibus. Maecenas vestibulum vulputate nisl sed vestibulum. Nullam varius turpis in hendrerit posuere.
-
-Nulla rhoncus tortor eget ipsum commodo lacinia sit amet eu urna. Cras maximus leo mauris, ac congue eros sollicitudin ac. Integer vel erat varius, scelerisque orci eu, tristique purus. Proin id leo quis ante pharetra suscipit et non magna. Morbi in volutpat erat. Vivamus sit amet libero eu lacus pulvinar pharetra sed at felis. Vivamus non nibh a orci viverra rhoncus sit amet ullamcorper sem. Ut nec tempor dui. Aliquam convallis vitae nisi ac volutpat. Nam accumsan, erat eget faucibus commodo, ligula dui cursus nisi, at laoreet odio augue id eros. Curabitur quis tellus eget nunc ornare auctor.
-
-
-%------------------------------------------------
-
-\section*{Discussion}
-
-Use the Discussion section to objectively evaluate your work, do not just put praise on everything you did, be critical and exposes flaws and weaknesses of your solution. You can also explain what you would do differently if you would be able to start again and what upgrades could be done on the project in the future.
-
-
-%------------------------------------------------
-
-\section*{Acknowledgments}
-
-Here you can thank other persons (advisors, colleagues ...) that contributed to the successful completion of your project.
-
-
-%----------------------------------------------------------------------------------------
-%	REFERENCE LIST
-%----------------------------------------------------------------------------------------
-\bibliographystyle{unsrt}
-\bibliography{report}
-
-
+	% Makes all text pages the same height
+	\flushbottom 
+	
+	% Print the title and abstract box
+	\maketitle 
+	
+	% Removes page numbering from the first page
+	\thispagestyle{empty} 
+	
+	%----------------------------------------------------------------------------------------
+	%	ARTICLE CONTENTS
+	%----------------------------------------------------------------------------------------
+	
+	\section*{Introduction}
+	Statistical plots are one of the basic tools, which a scientist can use to convey information. They are used and abused in many scientific works, often not of the best quality. Therefore we ask the question - what are the properties of a high-quality plot? The first thing that comes to mind is how well the plot presents the information in data. Different types of plots are suitable for different kinds of data. A line plot is great for presenting time-series data, while it fails on categorical data. Since evaluating the quality of a plot on such a level requires a deeper understanding of the context, we focus on the visual aspect. This enables us to utilize deep learning to find a relationship between the visual properties of the graph and its quality. We start with the description of best practices when creating a plot. Next, we take a look at our dataset acquisition process and finish off with our plans for the future.
+	
+	%------------------------------------------------
+	
+	% \section*{Methods}
+	% Do we need this?
+	
+	%------------------------------------------------
+	\section*{What makes a good plot?}
+	The biggest question we have to answer is, what makes a good plot? To get an overview on that, let's summarize the parts of the article \emph{Testing statistical Charts: What makes a Good Graph?} \cite{Whatmakesagoodplot}, that we can (at least implicitly) use in our approach of evaluating the plot's quality. 
+	
+	The main goal of statistical plots is to effectively and accurately show the data. Any additional enhancement on the plot should contribute to that aim. Here are some things that are considered to be current best practices. Let's first list some of the cognitive principles:
+	\begin{itemize}[noitemsep] 
+		\item \textbf{Proximity}.
+		This principle tells us, that we need to put things we want to compare closer together, just the opposite for the less important things.
+		\item \textbf{Similarity}.
+		This principle tells us to group together things that somehow belong to the same group. We could do that with the same color or same shape.
+		\item \textbf{Common region}.
+		This principle suggests that elements that are contained in a common region, belong together.
+		\item \textbf{Working memory}.
+		This tells us about the limitation of our working memory. In general, we can not process more than $7 (\pm 2)$ items.
+		\item \textbf{Change blindness}.
+		This principle talks about the fact, that it is difficult to detect changes on a similar object.
+		\item \textbf{Ease of comparison}.
+		Some things are easier to compare than others. If things can be compared in a way that is higher in the following hierarchy, it should be done that way:
+		\begin{enumerate}[noitemsep] 
+			\item Position (common scale)
+			\item Position (nonaligned scale)
+			\item Length, direction, angle, slope
+			\item Area
+			\item Volume, density, curvature
+			\item Shading, color saturation, color hue
+			\item Discriminable shape
+			\item Indiscriminable shape
+		\end{enumerate}
+	\end{itemize}
+	It was shown that aesthetics used in plots can change how the data is read. A very important thing we need to consider is the colors. Color can change everything. Like we already stated, elements of the same group should have the same color. But what is that color? Colors should be chosen to best match the data and plot type. If we are trying to show magnitude, we should use a univariate color scheme. On the other hand, if we want to show the data that differ in sign, we should use a double-ended color scale. If possible, we should keep the number of hues to a minimum, we should transit through neutral colors, such as white when utilizing a gradient. Because color blindness is common in society, we should use color-blind accessible colors. These properties are a generalization of what is common in our perception, each person still has their own special preferences. Since we can't directly grade a plot based on these categories, especially if we don't know the context, we will rather utilize a crowdsourcing platform to acquire relevant data.
+	
+	%------------------------------------------------
+	\section*{Getting the data}
+	The first task was to get the statistical plots to work with. We have decided to get them from different resources. We have chosen 7 different plots, that are box plot, line plot, bar plot, histogram, pie chart, scatter plot, violin plot. Then we have scrapped these types of plots from Google, Bing, and DuckDuckGo image search results. Next, we have downloaded bachelor's, masters and doctoral thesis from \emph{Repository of the University of Ljubljana} \cite{repositoryUL} and extracted images from there. Finally, we have also downloaded images from journals from \emph{PLOS ONE} \cite{plosone}.
+	
+	%-----------------------------------------------
+	\section*{Classification model}
+	Now we gathered datasets of different images. The images scraped from search engines are already categorized into correct plot classes. We filtered them and deleted bad images by hand, and then used them to train a convolutional neural network to help us with the classification of other images. The majority of images extracted from PDF-s were not plots, so we added eight class \texttt{not\_plot}. For its training set, we used 400 randomly selected images, extracted from the FRI bachelor theses, from which we deleted any image that represented a plot. 
+	
+	For classification, we used a residual neural network, more precisely ResNet101, which has 101 layers. Since our train dataset is not large, we needed to take a pretrained network, that was trained on more than a million images of 1000 classes from ImageNet. Pretrained CNN is already good at recognizing representative shapes, we just need to fine-tune it to be able to separate between the classes we are interested in. We deleted the last layer and replaced it with a fully connected layer with 8 neurons, each representing one of our classes. Then we used Google Colab to do 50 epochs of training on our dataset, using Adam optimizer together with cross-entropy loss. We validated it in each epoch and saved the model that had the lowest loss. We tried different batch shapes and learning rates, and reached best validation accuracy of 95\% and cross-entropy loss of 0.16. 
+	
+	After the first iteration of training, we classified the first 2000 images from FRI bachelor theses and sorted them into 3 groups - those for which the model returned more than 99\% probability for the predicted class, those for which it returned more than 90\% and those for which it returned less. We then handpicked all wrongly classified images from there, and also those correctly classified, that the model wasn't sure about, and added them to the training set. On figure \ref{wrong phase1} we can see some examples.
+	
+	\begin{figure}[h]
+		\includegraphics[width=0.36\linewidth]{bar_wrong_ph1.jpeg}
+		\includegraphics[width=0.36\linewidth]{box_wrong_ph1.jpeg}
+		\includegraphics[width=0.24\linewidth]{pie_wrong_ph1.jpeg}
+		\caption{\textbf{Images that were wrongly classified as plots.} From left to right we can see images classified as bar plot, box plot and pie chart. None of them is a plot, but if we think in the context of CNNs, we can understand why the model made those mistakes.}
+		\label{wrong phase1}
+	\end{figure}
+	
+	In the second phase, when we trained the network again together with those harder examples, it reached 96\% accuracy and a loss of 0.13 on validation data. We will use this model for filtering the extracted images, and will additionally fine tune for different sources, if needed.
+	
+	%-----------------------------------------------
+	\section*{Further work}
+	Now we are trying to figure out, what are the attributes, on which we decide whether a plot is good or not. For determining the most popular attributes, we have decided to design some questionnaires and give it to a few people. On those questionnaires will be different plots. For each pair, an individual will decide which one is better and why. For instance \emph{"left plot is better because it has more colors", "right one is better because the axis are labeled",} ... When we will get the results from several questionnaires, we will gather the results and decided what are the most important attributes that make a good plot. From there, we will put our data set of plots on evaluation on Amazon's Mechanical Turk. Workers will be asked similar questions, but now on attributes we have gathered from questionnaires. The plan is to evaluate pairs of pictures, for each which one has better \emph{attribute1, attribute2, ...} After we will have all the data, we are going to build a regression model that will predict how good the plot is and what are the values of its attributes - those should explain why the plot is good/bad.
+	
+	
+	
+	% \section*{Results}
+	% Pie chart is the best plot.
+	
+	
+	
+	%------------------------------------------------
+	
+	% \section*{Discussion}
+	% Do we need this?
+	
+	
+	%------------------------------------------------
+	
+	% \section*{Acknowledgments}
+	% Do we need this?
+	
+	%----------------------------------------------------------------------------------------
+	%	REFERENCE LIST
+	%----------------------------------------------------------------------------------------
+	\bibliographystyle{unsrt}
+	\bibliography{report}
 \end{document}

@@ -5,23 +5,27 @@ from src.plot_scrapping.utils import remove_corrupted_images, remove_file_type, 
 
 
 def google_image_download(query, download_folder):
+    """
+    Download images from the Google Images using the Custom Search API
+    :param query: Query string
+    :param download_folder: Directory to save the images to
+    :return:
+    """
     gis = GoogleImagesSearch(GOOGLE_API_KEY, PROJECT_CX)
 
-    # define search params:
-    _search_params = {
+    search_params = {
         'q': query,
         'num': 100,
-        # 'safe': 'high|medium|off',
         'fileType': 'jpg|gif|png',
-        # 'imgType': 'clipart|face|lineart|news|photo',
-        # 'imgSize': 'huge|icon|large|medium|small|xlarge|xxlarge',
-        # 'imgDominantColor': 'black|blue|brown|gray|green|pink|purple|teal|white|yellow',
-        # 'rights': 'cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial|cc_nonderived'
     }
 
+    # Ensure that the download_folder exists
     Path(download_folder).mkdir(parents=True, exist_ok=True)
 
-    gis.search(search_params=_search_params)
+    # Query the API
+    gis.search(search_params=search_params)
+
+    # Iterate over the results and try to download them. Successfully downloaded images are accompanied with a JSON file containing the metadata.
     for image in gis.results():
         try:
             image.download(download_folder)

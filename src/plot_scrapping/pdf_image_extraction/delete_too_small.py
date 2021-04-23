@@ -3,6 +3,7 @@ import cv2
 
 from pathlib import Path
 
+# A script that deletes the images from the target directory that are below the size threshold
 
 dir = "D:/project/extracted_images/fri_bachelor_thesis"
 
