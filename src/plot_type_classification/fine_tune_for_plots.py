@@ -137,6 +137,7 @@ if __name__ == '__main__':
 
     # Create training and validation datasets
     image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train', 'val']}
+
     # Create training and validation dataloaders
     dataloaders_dict = {
         x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size, shuffle=True, num_workers=3) for x in

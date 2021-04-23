@@ -12,6 +12,11 @@ from io import BytesIO
 
 
 def extract_images_pdf(filename):
+    """
+    Extract the images from the input .pdf file and return them as a generator object
+    :param filename: Path to the .pdf file
+    :return: Generator object that returns extracted images
+    """
     doc = fitz.open(filename)
     for i in range(len(doc)):
         for img in doc.getPageImageList(i):
@@ -31,6 +36,12 @@ def extract_images_pdf(filename):
 
 
 def parse_metadata(file_path, type):
+    """
+    Parse the metadata from the .xml file that each thesis is accompanied with
+    :param file_path: Path to the metadata file
+    :param type: Type of thesis (bachelors, masters, phd, other)
+    :return: An object containing the title, keywords, author, type of work and the download link
+    """
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             data = reduce(operator.concat, f.readlines(), "")
@@ -51,6 +62,12 @@ def parse_metadata(file_path, type):
 
 
 def resize_image(img, side_length):
+    """
+    Resize the image in such a way, that the smaller side is equal to side_length
+    :param img: The input image (PIL)
+    :param side_length: Desired side length
+    :return: Resized image
+    """
     if img.height < side_length or img.width < side_length:
         return img
 
@@ -65,14 +82,17 @@ def resize_image(img, side_length):
 
 
 if __name__ == '__main__':
+    # Input parameters for extraction
     src_dir = "D:/project/FRI/diplome FRI"
     dst_dir = "D:/project/extracted_images/test"
     type_of_work = "bachelor_thesis"
     image_side_length = 480
 
+    # Create the dst_dir if it doesn't exist
     Path(dst_dir).mkdir(parents=True, exist_ok=True)
     index = 0
 
+    # Iterate over the folders in src_dir, extract the images and parse the metadata, which are then saved in the dst_dir
     for folder in tqdm(os.listdir(src_dir)):
         metadata = parse_metadata(os.path.join(src_dir, folder, "metaData.xml"), type_of_work)
         if metadata is None:
