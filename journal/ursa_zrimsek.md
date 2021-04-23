@@ -31,3 +31,11 @@ teammates about questionnaires.
 images together with predicted probabilities. Copied first 1000 images into predicted classes, depending on how sure the
 algorithm was in the predictions (>99% / >90% / not sure). For better learning we should filter them again by hand and 
 add more training images on which it was wrong or not sure.
+* 20\. (4h): Discussion with teammates, meeting with mentors. Filtering first 2000 images and adding wrongly classified
+to correct categories in training set. Extracted images from masters and phd thesis.
+* 21\. (1h 30min): Discussion with teammates about the first questionnaire. Further training of the CNN. Observing the
+predictions on the first 2000 images - it worked almost perfectly (because the hard images were already in the training 
+set). Run the filtering on the whole batchelor thesis dataset.
+* 22\. (9h): Observing predictions on the whole dataset. Writing report. Corrected the training to select the model with
+the best loss, not the best accuracy. Overviewing report and discussing questionnaires. Building questionnaires.
+
