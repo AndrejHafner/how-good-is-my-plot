@@ -3,6 +3,7 @@ import random
 from pathlib import Path
 import shutil
 
+# script for randomly selecting train and validation set of extracted images from FRI bachelor's thesis
 if __name__ == '__main__':
     dir = "D:/project/extracted_images/fri_bachelor_thesis"
     train_dir = "D:/project/extracted_images/plots_for_cnn/fri_bachelor_thesis_train2"

@@ -22,7 +22,7 @@ another classifier.
 * 14\. (3h): Downloaded and cleaned images from Google and DuckDuckGo.
 * 15\. (3h): Brainstorming for questionnaire. Extracting images from FRI bachelor thesis. Enabled fine 
 tuning on Google Colab. On 7 classes of plots we achieved 93% accuracy on validation set with ResNet101.
-* 16\. (1h): Discarded small images. Filtered extracted images to build a dataset for 8th class - not a plot. With it we
+* 16\. (2h): Discarded small images. Filtered extracted images to build a dataset for 8th class - not a plot. With it we
 will try to classify all the extracted images directly with CNN.
 * 18\. (2h): Selected random images for train and validation set for the not_plot class. Fine tuned ResNet101 and 
 achieved the same accuracy as with 7 classes - we could also try taking a bigger dataset for non-plots. Meeting with 
@@ -38,4 +38,5 @@ predictions on the first 2000 images - it worked almost perfectly (because the h
 set). Run the filtering on the whole batchelor thesis dataset.
 * 22\. (9h): Observing predictions on the whole dataset. Writing report. Corrected the training to select the model with
 the best loss, not the best accuracy. Overviewing report and discussing questionnaires. Building questionnaires.
+* 23\. (4h): Cleaning the code and correcting the report. Reviewing, making and sending questionnaires.
 

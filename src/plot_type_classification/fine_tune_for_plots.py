@@ -10,7 +10,17 @@ import os
 import copy
 
 
-def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25):
+def train_model(model, dataloader, criterion, optimizer, device, num_epochs=50):
+    """
+    Training model on data from dataloader with given optimizer, optimizing by criterion for num_epochs epochs.
+    :param model: model we are optimizing
+    :param dataloader: loader of data on which we want to train the model
+    :param criterion: loss function based on which we optimize the model and choose the best one
+    :param optimizer: optimizer whit which we optimize our model
+    :param device: device that is used for calculations
+    :param num_epochs: number of epochs of training
+    :return: trained model
+    """
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -31,7 +41,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25)
             running_corrects = 0
 
             # Iterate over data.
-            for inputs, labels in dataloaders[phase]:
+            for inputs, labels in dataloader[phase]:
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 
@@ -56,8 +66,8 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25)
                 running_loss += loss.item() * inputs.size(0)
                 running_corrects += torch.sum(preds == labels.data)
 
-            epoch_loss = running_loss / len(dataloaders[phase].dataset)
-            epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
+            epoch_loss = running_loss / len(dataloader[phase].dataset)
+            epoch_acc = running_corrects.double() / len(dataloader[phase].dataset)
 
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
@@ -78,13 +88,18 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25)
 
 
 def initialize_model(num_classes, use_pretrained=True):
-
+    """
+    Initializes ResNet101 network and changes the number of neurons in the last layer to correspond with the number of
+    classes we want it to classify in.
+    :param num_classes: number of classes
+    :param use_pretrained: if True, the initialized model uses weights pretrained on ImageNet dataset
+    :return: model
+    """
     model_ft = models.resnet101(pretrained=use_pretrained)
     num_ftrs = model_ft.fc.in_features
     model_ft.fc = nn.Linear(num_ftrs, num_classes)
-    input_size = 224
 
-    return model_ft, input_size
+    return model_ft
 
 
 # FOR GOOGLE COLAB
@@ -109,7 +124,8 @@ if __name__ == '__main__':
     num_epochs = 50
 
     # Initialize the model for this run
-    model_ft, input_size = initialize_model(num_classes, use_pretrained=True)
+    input_size = 224
+    model_ft = initialize_model(num_classes, use_pretrained=True)
 
     # Resizing and normalizing data
     data_transforms = {
