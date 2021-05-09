@@ -10,7 +10,7 @@
 * 3\. (1h 30min): Had a meeting with teammates and mentors. Discussed about what we have found out and how to pursue 
 further. Before the meeting I prepared the talking points and our questions.
 
-## April 2021 (?)
+## April 2021 (47h)
 
 * 6\. (2h): Studied options for plot type classification. Decided to use pytorch pretrained CNNs, which we can use for 
 embeddings of the plot images, to then further classify them based on cosine distance or with SVM. If that won't work well, 
@@ -39,4 +39,11 @@ set). Run the filtering on the whole batchelor thesis dataset.
 * 22\. (9h): Observing predictions on the whole dataset. Writing report. Corrected the training to select the model with
 the best loss, not the best accuracy. Overviewing report and discussing questionnaires. Building questionnaires.
 * 23\. (4h): Cleaning the code and correcting the report. Reviewing, making and sending questionnaires.
+* 27\. (2h): Discussion with teammates, making and sending questionnaires.
+* 28\. (4h): Discussion, answering questionnaire, gathering information from answered questionnaires.
 
+## May 2021 (?h)
+
+*  (1h): Meeting, discussion
+* 8\. (3h): Sorting and uploading images for next (last?) iteration of training.
+* 9\. (2h): 

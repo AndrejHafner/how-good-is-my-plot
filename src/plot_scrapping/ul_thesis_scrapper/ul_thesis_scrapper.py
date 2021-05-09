@@ -8,7 +8,7 @@ import shutil
 import requests
 
 
-def get_files( files ):
+def get_files( files, faculty='fri' ):
     """
     Downloads pdf's from repositories listed in files list
     :param files: List of repositories you want to download
@@ -31,10 +31,10 @@ def get_files( files ):
     time.sleep(TIMEOUT)
 
     # Accept the cookies, because the cookie bar overflows some elements
-    cookies = driver.find_element_by_class_name( 'eucookielaw-accept' )
+    cookies = driver.find_element_by_class_name('eucookielaw-accept')
     cookies.click()
     driver.execute_script("window.scrollTo(0, 1080)")
-    accept = driver.find_element_by_name( 'shrani' )
+    accept = driver.find_element_by_name('shrani')
     accept.click()
     driver.back()
     driver.back()
@@ -44,7 +44,7 @@ def get_files( files ):
         temp = driver.find_element_by_css_selector(f"[title^='Sproži iskanje - {f}']")
         temp.click()
 
-        missed_f = get_pdfs(driver, f)
+        missed_f = get_pdfs(driver, f, faculty)
         print(f"Finished downloading: {f}")
         print(f"Missed: {missed_f}")
 
@@ -59,7 +59,8 @@ def get_files( files ):
     print("DONE")
     driver.close()
 
-def download_pdf(driver, filename, name, myfile, newPage = False):
+
+def download_pdf(driver, filename, name, myfile, newPage = False, faculty='fri'):
     """
     Download current pdf
     :param driver: webdriver.Chrome
@@ -69,12 +70,12 @@ def download_pdf(driver, filename, name, myfile, newPage = False):
     :param newPage: Sometimes to download pdf, new page will open, set it to True so driver will know to close it
     """
 
-    if not os.path.isdir(f'D:/project/FRI/{filename}/{name}'):
+    if not os.path.isdir(f'D:/project/{faculty}/{filename}/{name}'):
         print(name)
-        os.makedirs(f'D:/project/FRI/{filename}/{name}')
+        os.makedirs(f'D:/project/{faculty}/{filename}/{name}')
         print("   dir done, writing ...")
-        open(f'D:/project/FRI/{filename}/{name}/{name}.pdf', 'wb').write(myfile.content)
-        print("      wroted")
+        open(f'D:/project/{faculty}/{filename}/{name}/{name}.pdf', 'wb').write(myfile.content)
+        print("      written")
 
         if newPage:
             driver.close()
@@ -83,7 +84,7 @@ def download_pdf(driver, filename, name, myfile, newPage = False):
         # get meta data xml file
         print("   get metadata ...")
         metaData = driver.find_element_by_css_selector("[href^='Export.php']")
-        wget.download(metaData.get_attribute('href'), f'D:/project/FRI/{filename}/{name}/metaData.xml')
+        wget.download(metaData.get_attribute('href'), f'D:/project/{faculty}/{filename}/{name}/metaData.xml')
         print("      DONE")
     else:
         print("ALREADY STORED")
@@ -92,8 +93,7 @@ def download_pdf(driver, filename, name, myfile, newPage = False):
             driver.switch_to.window(driver.window_handles[0])
 
 
-
-def get_pdfs( driver, filename, TIMEOUT=5):
+def get_pdfs( driver, filename, faculty='fri', TIMEOUT=5):
     """
     Try to locate the pdf and download it
     :param driver: webdriver.Chrome
@@ -101,10 +101,10 @@ def get_pdfs( driver, filename, TIMEOUT=5):
     :return: Number of missed pdf's
     """
 
-    if not os.path.isdir(f'D:/project/FRI/{filename}'):
-        os.makedirs(f'D:/project/FRI/{filename}')
+    if not os.path.isdir(f'D:/project/{faculty}/{filename}'):
+        os.makedirs(f'D:/project/{faculty}/{filename}')
 
-    all_hits = int( driver.find_element_by_class_name( 'StZadetkov' ).text.split()[0] )
+    all_hits = int(driver.find_element_by_class_name('StZadetkov').text.split()[0])
     print(f"ALLHITs: {all_hits}")
 
     missed = 0
@@ -118,7 +118,7 @@ def get_pdfs( driver, filename, TIMEOUT=5):
             elements = data.find_elements_by_class_name('Besedilo')
             el = elements[i]
             diploma = el.find_element_by_css_selector("[href^='IzpisGradiva']")
-            el_number = int( el.find_element_by_class_name( 'Stevilka' ).text[:-1] )
+            el_number = int(el.find_element_by_class_name('Stevilka').text[:-1])
 
             diploma.click()
             time.sleep(1)
@@ -135,12 +135,12 @@ def get_pdfs( driver, filename, TIMEOUT=5):
                     name = bytes(myfile.headers['Content-Disposition'], 'utf-8').decode("utf-8").encode("latin-1").decode("utf-8").split('"')[1][:-4][:80]
                     name = name.replace("/", "")
 
-                    download_pdf(driver, filename, name, myfile)
+                    download_pdf(driver, filename, name, myfile, faculty)
 
                 except:
                     # Second form of data
                     try:
-                        pdf = driver.find_element_by_css_selector("[href^='http://eprints.fri.uni-lj.si']")
+                        pdf = driver.find_element_by_css_selector(f"[href^='http://eprints.{faculty}.uni-lj.si']")
                     except:
                         print("Cant find http://eprints ..")
                         missed +=1
@@ -154,7 +154,7 @@ def get_pdfs( driver, filename, TIMEOUT=5):
                         name = myfile.headers['Content-Disposition'].split("=")[-1][:80]
                         name = name.replace("/", "")
 
-                        download_pdf(driver, filename, name, myfile)
+                        download_pdf(driver, filename, name, myfile, faculty)
 
                         driver.back()
                         continue
@@ -164,7 +164,6 @@ def get_pdfs( driver, filename, TIMEOUT=5):
 
                     try:
                         # Third form of data:
-
                         pdf.click()
                         driver.switch_to.window(driver.window_handles[1])
 
@@ -174,19 +173,18 @@ def get_pdfs( driver, filename, TIMEOUT=5):
                             missed += 1
                             raise Exception("Doc only for registered users")
 
-
                         link = driver.find_element_by_xpath("//*[contains(text(), 'Download')]").get_attribute("href")
                         myfile = requests.get(link, allow_redirects=True)
-                        name =  myfile.headers['Content-Disposition'].split("=")[-1][:80]
+                        name = myfile.headers['Content-Disposition'].split("=")[-1][:80]
                         name = name.replace("/", "")
 
-                        download_pdf(driver, filename, name, myfile, True)
+                        download_pdf(driver, filename, name, myfile, True, faculty)
 
                     except:
                         print(f"COULD NOT GET FILE, number = {el_number}")
                         try:
                             # If failed to download, also remove the folder
-                            shutil.rmtree(f'./FRI/{filename}/{name}')
+                            shutil.rmtree(f'./{faculty}/{filename}/{name}')
                             driver.close()
                             driver.switch_to.window(driver.window_handles[0])
                         except:
@@ -197,7 +195,7 @@ def get_pdfs( driver, filename, TIMEOUT=5):
             except:
                 try:
                     print(f"COULD NOT GET FILE, number = {el_number}")
-                    shutil.rmtree(f'./FRI/{filename}/{name}')
+                    shutil.rmtree(f'./{faculty}/{filename}/{name}')
                 except:
                     pass
                 missed += 1
@@ -215,14 +213,14 @@ def get_pdfs( driver, filename, TIMEOUT=5):
         else:
             n = 0
 
-
     return missed
 
 
 if __name__ == "__main__":
 
-    #in files list write everything you want to download.
-    files = ['diplome FRI','magisteriji FRI','doktorati FRI', 'druga gradiva FRI']
+    # in files list write everything you want to download.
+    faculty = 'FMF'
+    files = [f'diplome {faculty}', f'magisteriji {faculty}', f'doktorati {faculty}', f'druga gradiva {faculty}']
 
-    get_files(files)
+    get_files(files, faculty.lower())
 
