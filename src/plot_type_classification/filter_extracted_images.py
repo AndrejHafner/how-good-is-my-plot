@@ -98,69 +98,72 @@ if __name__ == '__main__':
     copy_images = True
 
     model_name = "resnet101"
-    saved_model = "cnn_weights/resnet101_phase2.pth"
+    saved_model = "cnn_weights/resnet101_phase3.pth"
 
-    # which images to classify
-    images_path = "D:/project/extracted_images/fri_master_thesis"
-    nr_of_images = None
+    faculties = ['fri', 'fmf', 'ef']
+    types = ['bachelor', 'master', 'phd', 'other']
 
-    # where to copy the classified images
-    filtered_images_path = "D:/project/filtered_master"
+    for faculty in faculties:
+        for type in types:
+            # which images to classify
+            images_path = f"D:/project/extracted_images/{faculty}_{type}"
+            nr_of_images = None
 
-    num_classes = 8
-    class_dict = {0: 'bar_plot', 1: 'box_plot', 2: 'histogram', 3: 'line_plot', 4: 'not_plot', 5: 'pie_chart',
-                  6: 'scatter_plot', 7: 'violin_plot'}
+            # where to copy the classified images
+            filtered_images_path = f"D:/project/filtered/{faculty}/{type}"
 
-    model = load_model(model_name, saved_model, num_classes)
-    input_size = 224
+            num_classes = 8
+            class_dict = {0: 'bar_plot', 1: 'box_plot', 2: 'histogram', 3: 'line_plot', 4: 'not_plot', 5: 'pie_chart',
+                          6: 'scatter_plot', 7: 'violin_plot'}
 
-    # check if device is available
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model.to(device)
-    model.eval()
+            model = load_model(model_name, saved_model, num_classes)
+            input_size = 224
 
-    data = scrapped_image_generator(images_path, nr_of_images)
+            # check if device is available
+            device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+            model.to(device)
+            model.eval()
 
-    # make the folders for classified images
-    for c in class_dict.values():
-        if c != 'not_plot':
-            Path(os.path.join(filtered_images_path, "sure", c)).mkdir(parents=True, exist_ok=True)
-        Path(os.path.join(filtered_images_path, "almost_sure", c)).mkdir(parents=True, exist_ok=True)
-        Path(os.path.join(filtered_images_path, "not_sure/not_plot")).mkdir(parents=True, exist_ok=True)
+            data = scrapped_image_generator(images_path, nr_of_images)
 
-    # classifications
-    for image, filename in data:
-        img = image.to(device)
+            # make the folders for classified images
+            for c in class_dict.values():
+                Path(os.path.join(filtered_images_path, "sure", c)).mkdir(parents=True, exist_ok=True)
+                Path(os.path.join(filtered_images_path, "almost_sure", c)).mkdir(parents=True, exist_ok=True)
+                Path(os.path.join(filtered_images_path, "not_sure/not_plot")).mkdir(parents=True, exist_ok=True)
 
-        prediction = model(img).cpu()
-        probabilities = softmax(prediction, dim=1).detach().numpy()[0]
-        predicted_ids = np.argsort(probabilities)[::-1]
+            # classifications
+            for image, filename in data:
+                img = image.to(device)
 
-        # show images together with their probabilities
-        if show_image_with_predictions:
-            show_image(image, probabilities, predicted_ids, class_dict)
+                prediction = model(img).cpu()
+                probabilities = softmax(prediction, dim=1).detach().numpy()[0]
+                predicted_ids = np.argsort(probabilities)[::-1]
 
-        file_path = os.path.join(images_path, filename)
+                # show images together with their probabilities
+                if show_image_with_predictions:
+                    show_image(image, probabilities, predicted_ids, class_dict)
 
-        predicted_class = class_dict[predicted_ids[0]]
-        prob = probabilities[predicted_ids[0]]
+                file_path = os.path.join(images_path, filename)
 
-        # copying the images into correct folders based on the probability the model returns
-        if copy_images:
-            if prob > 0.99:
-                if predicted_class != 'not_plot':
-                    shutil.copy(file_path, os.path.join(filtered_images_path, "sure", predicted_class,
-                                                        f"{round(prob*100)}_fribt_" + filename))
+                predicted_class = class_dict[predicted_ids[0]]
+                prob = probabilities[predicted_ids[0]]
 
-            elif prob > 0.9:
-                shutil.copy(file_path, os.path.join(filtered_images_path, "almost_sure", predicted_class,
-                                                    f"{round(prob*100)}_fribt_" + filename))
+                # copying the images into correct folders based on the probability the model returns
+                if copy_images:
+                    if prob > 0.99:
+                        shutil.copy(file_path, os.path.join(filtered_images_path, "sure", predicted_class,
+                                                            f"{round(prob*100)}_{faculty+type[0]}_" + filename))
 
-            else:
-                if predicted_class == 'not_plot':
-                    shutil.copy(file_path, os.path.join(filtered_images_path, "not_sure/not_plot",
-                                                        f"{class_dict[predicted_ids[1]]}_not_{round(prob*100)}_fribt_" + filename))
-                else:
-                    shutil.copy(file_path, os.path.join(filtered_images_path, "not_sure",
-                                                        f"{predicted_class}_{round(prob*100)}_fribt_" + filename))
+                    elif prob > 0.9:
+                        shutil.copy(file_path, os.path.join(filtered_images_path, "almost_sure", predicted_class,
+                                                            f"{round(prob*100)}_{faculty+type[0]}_" + filename))
+
+                    else:
+                        if predicted_class == 'not_plot':
+                            shutil.copy(file_path, os.path.join(filtered_images_path, "not_sure/not_plot",
+                                                                f"{class_dict[predicted_ids[1]]}_not_{round(prob*100)}_{faculty+type[0]}_" + filename))
+                        else:
+                            shutil.copy(file_path, os.path.join(filtered_images_path, "not_sure",
+                                                                f"{predicted_class}_{round(prob*100)}_{faculty+type[0]}_" + filename))
 
