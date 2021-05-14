@@ -17,7 +17,12 @@ def extract_images_pdf(filename):
     :param filename: Path to the .pdf file
     :return: Generator object that returns extracted images
     """
-    doc = fitz.open(filename)
+    try:
+        doc = fitz.open(filename)
+    except:
+        print("Error opening: ", filename)
+        return
+
     for i in range(len(doc)):
         for img in doc.getPageImageList(i):
             try:
@@ -73,19 +78,19 @@ def resize_image(img, side_length):
 
     if img.height > img.width: # Set width to side length and keep aspect ratio
         scale_ratio = side_length / img.width
-        new_height  = round(img.height * scale_ratio)
+        new_height = round(img.height * scale_ratio)
         return img.resize((side_length, new_height))
     else:  # Set height to side length and keep aspect ratio
         scale_ratio = side_length / img.height
-        new_width  = round(img.width * scale_ratio)
+        new_width = round(img.width * scale_ratio)
         return img.resize((new_width, side_length))
 
 
 if __name__ == '__main__':
     # Input parameters for extraction
-    src_dir = "D:/project/FRI/druga gradiva FRI"
-    dst_dir = "D:/project/extracted_images/fri_other"
-    type_of_work = "fri_other"
+    src_dir = "D:/project/ef/druga gradiva EF"
+    dst_dir = "D:/project/extracted_images/ef_other"
+    type_of_work = "ef_other"
 
     image_side_length = 480
 

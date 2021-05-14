@@ -44,6 +44,10 @@ the best loss, not the best accuracy. Overviewing report and discussing question
 
 ## May 2021 (?h)
 
-*  (1h): Meeting, discussion
+* 3\. (1h 30min): Meeting, discussion
 * 8\. (3h): Sorting and uploading images for next (last?) iteration of training.
-* 9\. (2h): 
+* 9\. (4h): Training with different parameters, scrapping more faculties (FMF, EF).
+* 10\. (2h): Scraping, extracting, filtering images.
+* 11\. (2h): Running classifications, generalizing code
+* 12\. (1h 30min): Identifying and removing duplicates, discussion
+* 13\. (30min): Copying filtered images into one folder, adding them to drive to begin hand filtering
