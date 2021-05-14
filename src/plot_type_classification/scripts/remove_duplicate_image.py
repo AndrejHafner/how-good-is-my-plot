@@ -7,7 +7,7 @@ def remove_duplicates(folder):
     images = {os.path.join(folder, filename): cv2.imread(os.path.join(folder, filename), cv2.IMREAD_GRAYSCALE) for filename
               in os.listdir(folder)}
 
-    all_groups = [list(grouper) for _, grouper in itertools.groupby(list(images.items()), key=lambda x: x[1].shape)]
+    all_groups = [list(grouper) for _, grouper in itertools.groupby(sorted(list(images.items()), key=lambda x: x[1].shape), key=lambda x: x[1].shape)]
 
     duplicates = set()
     for group in all_groups:
