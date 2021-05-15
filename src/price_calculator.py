@@ -1,9 +1,11 @@
 from generate_plot_pairs import generate_plot_pairs
 
 
-def calculate_final_price(worker_price, master_worker_price, amazon_fee, csv_filename, pairs_per_questioner):
+def calculate_final_price(worker_price, master_worker_price, csv_filename, pairs_per_questioner):
     '''
-    Prints final price of the survey published on Amazon Mechanical Turk
+    Prints final price of the survey published on Amazon Mechanical Turk.
+    Amazon's fee is 20% on the reward for workers, additional 20% if there is more than 10 assignments.
+    Additional 5% fee of the reward for masters workers.
     :param worker_price: price for each worker per questioner
     :param master_worker_price: bonus for each worker
     :param amazon_fee: price for amazon fee
@@ -18,8 +20,9 @@ def calculate_final_price(worker_price, master_worker_price, amazon_fee, csv_fil
     print(f'If each questioner has {pairs_per_questioner} comparisons, \n then number of questionaries: {number_of_questionaries}')
 
     print(f'If each worker is paid: {worker_price}, \n each master worker is paid {master_worker_price},')
-    #is amazon fee charged for every worker?
-    price = (worker_price + master_worker_price) * number_of_questionaries + amazon_fee
+
+    more_than_10 = int(pairs_per_questioner >= 10)
+    price = (( 1 + 0.2 + 0.2 * more_than_10 ) * worker_price + ( 1 + 0.05 )*master_worker_price) * number_of_questionaries
     print(f'then final is price: {price}')
 
 
@@ -49,7 +52,6 @@ if __name__ == '__main__':
     #here set the prices
     worker_price = 0.1
     master_worker_price = 0.2
-    amazon_fee = 0.1
     pairs_per_questioner = 5
 
-    calculate_final_price(worker_price, master_worker_price, amazon_fee, csv_filename, pairs_per_questioner)
+    calculate_final_price(worker_price, master_worker_price, csv_filename, pairs_per_questioner)
