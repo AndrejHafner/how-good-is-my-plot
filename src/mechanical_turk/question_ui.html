@@ -65,6 +65,10 @@
 
         .image-comparison {
         }
+
+        .error {
+            color: red;
+        }
     </style>
 </head>
 
@@ -96,6 +100,9 @@
                     <img src="1.jpeg">
                 </label>
             </div>
+            <div v-if="!comparison.validation.plot_selected" class="mt-1 mb-1 error">
+                Please select a plot.
+            </div>
 
             <div class="mt-2 mb-2">
                 <span class="mt-2 mb-2">What did you consider when making this decision?</span>
@@ -115,26 +122,26 @@
                     <div class="form-check col-2 my-checkbox">
                         <input class="form-check-input text-center" type="checkbox"
                                v-model="comparison.data.checkboxes.first.legend" id="left_legend"
-                               @click="comparison.data.checkboxes.second.legend = false">
+                               @click="comparison.data.checkboxes.second.legend = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
                         <input class="form-check-input" type="checkbox"
                                v-model="comparison.data.checkboxes.first.colour" id="left_colour"
-                               @click="comparison.data.checkboxes.second.colour = false">
+                               @click="comparison.data.checkboxes.second.colour = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
                         <input class="form-check-input" type="checkbox" v-model="comparison.data.checkboxes.first.axes"
-                               id="left_axes" @click="comparison.data.checkboxes.second.axes = false">
+                               id="left_axes" @click="comparison.data.checkboxes.second.axes = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
                         <input class="form-check-input" type="checkbox"
                                v-model="comparison.data.checkboxes.first.element_sizes" id="left_element_sizes"
-                               @click="comparison.data.checkboxes.second.element_sizes = false">
+                               @click="comparison.data.checkboxes.second.element_sizes = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
                         <input class="form-check-input" type="checkbox"
                                v-model="comparison.data.checkboxes.first.transparency" id="left_transparency"
-                               @click="comparison.data.checkboxes.second.transparency = false">
+                               @click="comparison.data.checkboxes.second.transparency = false; comparison.validation.decision_selected = true;">
                     </div>
                 </div>
 
@@ -143,37 +150,40 @@
                     <div class="form-check col-2 my-checkbox">
                         <input class="form-check-input text-center" type="checkbox"
                                v-model="comparison.data.checkboxes.second.legend" id="right_legend"
-                               @click="comparison.data.checkboxes.first.legend = false">
+                               @click="comparison.data.checkboxes.first.legend = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
                         <input class="form-check-input" type="checkbox"
                                v-model="comparison.data.checkboxes.second.colour" id="right_colour"
-                               @click="comparison.data.checkboxes.first.colour = false">
+                               @click="comparison.data.checkboxes.first.colour = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
                         <input class="form-check-input" type="checkbox" v-model="comparison.data.checkboxes.second.axes"
                                id="right_axes"
-                               @click="comparison.data.checkboxes.first.axes = false">
+                               @click="comparison.data.checkboxes.first.axes = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
                         <input class="form-check-input" type="checkbox"
                                v-model="comparison.data.checkboxes.second.element_sizes" id="right_element_sizes"
-                               @click="comparison.data.checkboxes.first.element_sizes = false">
+                               @click="comparison.data.checkboxes.first.element_sizes = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
                         <input class="form-check-input" type="checkbox"
                                v-model="comparison.data.checkboxes.second.transparency" id="right_transparency"
-                               @click="comparison.data.checkboxes.first.transparency = false">
+                               @click="comparison.data.checkboxes.first.transparency = false; comparison.validation.decision_selected = true;">
                     </div>
                 </div>
             </div>
+            <div v-if="!comparison.validation.decision_selected" class="mt-1 mb-1 error">
+                    Please select atleast one consideration.
+                </div>
         </div>
 
         <button @click="validate()">Validate</button>
     </div>
 </div>
 <script>
-    <!--    TODO: Validation, data fetching, data sending-->
+    <!--    TODO: data fetching, data sending-->
     var app = new Vue({
             el: '#app',
             data: function () {
@@ -209,27 +219,22 @@
                     })
                 }
             },
-            // watch: {
-            //     "comparisons": {
-            //         handler: function (new_val, old_val) {
-            //             this.comparisons = new_val.map(function (comparison) {
-            //                 checkboxes = comparison.data.checkboxes
-            //                 print(checkboxes)
-            //                 // keys = Object.keys()
-            //                 // console.log(keys)
-            //                 return comparison
-            //             })
-            //         },
-            //         deep: true,
-            //         immediate: true
-            //     }
-            // },
             methods: {
                 validate() {
                     console.log(JSON.parse(JSON.stringify(this.comparisons)))
+                    this.comparisons = this.comparisons.map(function (val) {
+                        val.validation.plot_selected = val.data.selected_plot != null
+                        val.validation.decision_selected = Object.values(val.data.checkboxes.first).some(el => el) || Object.values(val.data.checkboxes.second).some(el => el)
+                        return val
+                    })
+
+                    valid = this.comparisons.map(el => el.validation.plot_selected).every(el => el) && this.comparisons.map(el => el.validation.decision_selected).every(el => el)
+                    console.log("Valid: ", valid)
+                    return valid
                 },
                 select_comparison(comparison, plot) {
                     comparison.data.selected_plot = plot
+                    comparison.validation.plot_selected = true
                 }
             }
         }
