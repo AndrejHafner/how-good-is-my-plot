@@ -78,21 +78,21 @@
 <div class="my-container" id="app">
     <div class="">
 
-        <div class="question-container" v-for="plot in plots">
+        <div class="question-container" v-for="comparison in comparisons">
 
-            <h2>Comparison {{plot}}</h2>
+            <h2>Comparison {{comparison.index}}</h2>
             <div class="mt-2 mb-2">
                 <span>Which plot is better?</span>
 
             </div>
 
             <div class="image-comparison row">
-                <label class="col-6 align-self-center">
-                    <input type="radio" name="test" value="small">
+                <label class="col-6 align-self-center" @click="select_comparison(comparison, 'left')">
+                    <input type="radio" :name="comparison.index" value="small">
                     <img src="0.jpeg">
                 </label>
-                <label class="col-6 align-self-center">
-                    <input type="radio" name="test" value="small">
+                <label class="col-6 align-self-center" @click="select_comparison(comparison, 'right')">
+                    <input type="radio" :name="comparison.index" value="small">
                     <img src="1.jpeg">
                 </label>
             </div>
@@ -113,55 +113,127 @@
                 <div class="checkboxes row text-center mt-2">
                     <span class="col-2">Left plot</span>
                     <div class="form-check col-2 my-checkbox">
-                        <input class="form-check-input text-center" type="checkbox" value="" id="left_legend">
+                        <input class="form-check-input text-center" type="checkbox"
+                               v-model="comparison.data.checkboxes.first.legend" id="left_legend"
+                               @click="comparison.data.checkboxes.second.legend = false">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox" value="" id="left_colour">
+                        <input class="form-check-input" type="checkbox"
+                               v-model="comparison.data.checkboxes.first.colour" id="left_colour"
+                               @click="comparison.data.checkboxes.second.colour = false">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox" value="" id="left_axes">
+                        <input class="form-check-input" type="checkbox" v-model="comparison.data.checkboxes.first.axes"
+                               id="left_axes" @click="comparison.data.checkboxes.second.axes = false">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox" value="" id="left_element_sizes">
+                        <input class="form-check-input" type="checkbox"
+                               v-model="comparison.data.checkboxes.first.element_sizes" id="left_element_sizes"
+                               @click="comparison.data.checkboxes.second.element_sizes = false">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox" value="" id="left_transparency">
+                        <input class="form-check-input" type="checkbox"
+                               v-model="comparison.data.checkboxes.first.transparency" id="left_transparency"
+                               @click="comparison.data.checkboxes.second.transparency = false">
                     </div>
                 </div>
 
                 <div class="checkboxes row text-center mt-2">
                     <span class="col-2">Right plot</span>
                     <div class="form-check col-2 my-checkbox">
-                        <input class="form-check-input text-center" type="checkbox" value="" id="right_legend">
+                        <input class="form-check-input text-center" type="checkbox"
+                               v-model="comparison.data.checkboxes.second.legend" id="right_legend"
+                               @click="comparison.data.checkboxes.first.legend = false">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox" value="" id="right_colour">
+                        <input class="form-check-input" type="checkbox"
+                               v-model="comparison.data.checkboxes.second.colour" id="right_colour"
+                               @click="comparison.data.checkboxes.first.colour = false">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox" value="" id="right_axes">
+                        <input class="form-check-input" type="checkbox" v-model="comparison.data.checkboxes.second.axes"
+                               id="right_axes"
+                               @click="comparison.data.checkboxes.first.axes = false">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox" value="" id="right_element_sizes">
+                        <input class="form-check-input" type="checkbox"
+                               v-model="comparison.data.checkboxes.second.element_sizes" id="right_element_sizes"
+                               @click="comparison.data.checkboxes.first.element_sizes = false">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox" value="" id="right_transparency">
+                        <input class="form-check-input" type="checkbox"
+                               v-model="comparison.data.checkboxes.second.transparency" id="right_transparency"
+                               @click="comparison.data.checkboxes.first.transparency = false">
                     </div>
                 </div>
             </div>
         </div>
 
+        <button @click="validate()">Validate</button>
     </div>
 </div>
 <script>
+    <!--    TODO: Validation, data fetching, data sending-->
     var app = new Vue({
-        el: '#app',
-        data: function () {
-            return {
-                message: 'Hello Vue!',
-                plots: [1, 2, 3, 4]
+            el: '#app',
+            data: function () {
+                return {
+                    message: 'Hello Vue!',
+                    comparisons: [...Array(2).keys()].map(function (key) {
+                        return {
+                            index: key,
+                            data: {
+                                selected_plot: null,
+                                checkboxes: {
+                                    first: {
+                                        legend: false,
+                                        colour: false,
+                                        axes: false,
+                                        element_sizes: false,
+                                        transparency: false
+                                    },
+                                    second: {
+                                        legend: false,
+                                        colour: false,
+                                        axes: false,
+                                        element_sizes: false,
+                                        transparency: false
+                                    }
+                                }
+                            },
+                            validation: {
+                                plot_selected: true,
+                                decision_selected: true
+                            }
+                        }
+                    })
+                }
+            },
+            // watch: {
+            //     "comparisons": {
+            //         handler: function (new_val, old_val) {
+            //             this.comparisons = new_val.map(function (comparison) {
+            //                 checkboxes = comparison.data.checkboxes
+            //                 print(checkboxes)
+            //                 // keys = Object.keys()
+            //                 // console.log(keys)
+            //                 return comparison
+            //             })
+            //         },
+            //         deep: true,
+            //         immediate: true
+            //     }
+            // },
+            methods: {
+                validate() {
+                    console.log(JSON.parse(JSON.stringify(this.comparisons)))
+                },
+                select_comparison(comparison, plot) {
+                    comparison.data.selected_plot = plot
+                }
             }
         }
-    })
+    )
 </script>
 </body>
 </html>
