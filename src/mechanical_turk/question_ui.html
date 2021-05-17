@@ -183,12 +183,14 @@
                 Please select atleast one consideration.
             </div>
         </div>
-
-        <button @click="validate()">Validate</button>
-        <form method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>
-            <p>Describe the current weather where you live</p>
-            <p><textarea name="weather" cols="80" rows="3"></textarea></p>
-            <p><input type="submit" id="submitButton" class="btn btn-primary" value="Submit"/></p>
+        <div v-if="error_submitting" class="mt-2 mb-1 error">
+            Some of the comparisons are not completed. Please check for error messages and fill in the required fields.
+        </div>
+        <button @click="handleFormSubmit()">Submit</button>
+<!--        TODO: Change action URL when pushing to production!-->
+        <form method='post' id='mturk_form' action='https://workersandbox.mturk.com/mturk/externalSubmit'>
+            <input type="hidden" id="inputData" name="data">
+            <input type="hidden" id="inputAssignmentId" name="assignmentId">
         </form>
     </div>
 </div>
@@ -197,7 +199,7 @@
             el: '#app',
             data: function () {
                 return {
-                    message: 'Hello Vue!',
+                    error_submitting: false,
                     comparisons: "https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/0.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/1.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/9.jpeg; https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/7.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/5.jpeg"
                         .split("\t")
                         .map(x => x.split(";").map(el => el.trim()))
@@ -249,6 +251,22 @@
                 select_comparison(comparison, plot) {
                     comparison.data.selected_plot = plot
                     comparison.validation.plot_selected = true
+                },
+                handleFormSubmit() {
+                    this.error_submitting = false
+                    if (!this.validate()) {
+                        this.error_submitting = true
+                        return
+                    }
+
+                    const data = this.comparisons.map(el => {
+                        return el.data
+                    })
+
+                    const urlParams = new URLSearchParams(window.location.search)
+                    document.getElementById('inputAssignmentId').value = urlParams.get('assignmentId')
+                    document.getElementById('inputData').value = JSON.stringify(data)
+                    document.getElementById('mturk_form').submit()
                 }
             }
         }
