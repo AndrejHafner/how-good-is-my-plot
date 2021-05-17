@@ -10,20 +10,21 @@
 
     <style>
         img {
-            max-width: 100%;
-            max-height: 100%;
+            width: 100%;
+            max-height: 700px;
         }
 
         .my-container {
-            padding: 2em;
+            padding-left: 10em;
+            padding-right: 10em;
+            padding-bottom: 3em;
+            padding-top: 3em;
         }
 
         .response-box {
-            margin-left: 1em;
-            margin-right: 1em;
-            margin-top: 2em;
+            margin-top: 1em;
             padding: 1em;
-            border: 3px solid dodgerblue;
+            border: 2px solid dodgerblue;
             border-radius: 5px;
         }
 
@@ -72,6 +73,29 @@
 
         .error {
             color: red;
+            font-weight: 600;
+        }
+        .text-strong {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .border-images {
+            padding-bottom: 1em;
+            padding-top: 1em;
+            border-bottom: 2px solid black;
+            border-top: 2px solid black;
+        }
+        .checkbox-style {
+            width: 1.5em;
+            height: 1.5em;
+        }
+        .info-box {
+            background-color: lightskyblue;
+            border: 1px solid transparent;
+            border-radius: 0.5em;
+        }
+        .text-important {
+            font-weight: 600;
         }
     </style>
 </head>
@@ -84,17 +108,22 @@
 <!--  <p><input type='submit' id='submitButton' value='Submit' /></p></form>-->
 <!--  <script language='Javascript'>turkSetAssignmentID();</script>-->
 <div class="my-container" id="app">
+    <div class="info-box p-3 mt-3 mb-3">
+        <div class="mb-2"><span class="text-important">Motivation:</span> Our goal is to create a system for automatic grading of visual plot quality. You will help us gather information about what makes a plot good.</div>
+        <div><span class="text-important">IMPORTANT:</span> The context of the plots and the description of the data they present is not given,
+            therefore you should <span class="text-important">compare the plots only through their visual properties</span>. You shouldn't try to understand the meaning of the plot or what it represents, as that is irrelevant for our purpose.
+        </div>
+    </div>
     <div class="">
 
-        <div class="question-container" v-for="comparison in comparisons">
+        <div class="question-container" v-for="comparison in comparisons" :id="comparison.index">
 
             <h2>Comparison {{comparison.index}}</h2>
-            <div class="mt-2 mb-2">
-                <span>Which plot is better?</span>
-
+            <div class="mt-3 mb-3">
+                <span class="text-strong">Which plot is better?</span>  (click plot for selection)
             </div>
 
-            <div class="image-comparison row">
+            <div class="image-comparison row border-images">
                 <label class="col-6 align-self-center" @click="select_comparison(comparison, 'left')">
                     <input type="radio" :name="comparison.index" value="small">
                     <img :src="comparison.first_plot_url">
@@ -108,85 +137,85 @@
                 Please select a plot.
             </div>
 
-            <div class="mt-2 mb-2">
+            <div class="mt-4 mb-1 text-strong">
                 <span class="mt-2 mb-2">What did you consider when making this decision?</span>
             </div>
             <div class="response-box">
                 <div class="category-names row text-center">
                     <span class="col-2"></span>
                     <span class="col">Legend</span>
-                    <span class="col">Colour</span>
+                    <span class="col">Colour choice</span>
                     <span class="col">Axes</span>
-                    <span class="col">Element sizes</span>
-                    <span class="col">Transparency</span>
+                    <span class="col">Element sizing</span>
+                    <span class="col">Readability</span>
                 </div>
 
-                <div class="checkboxes row text-center mt-2">
-                    <span class="col-2">Left plot</span>
+                <div class="checkboxes row mt-2">
+                    <span class="col-2">Left plot has better</span>
                     <div class="form-check col-2 my-checkbox">
-                        <input class="form-check-input text-center" type="checkbox"
+                        <input class="form-check-input text-center checkbox-style" type="checkbox"
                                v-model="comparison.data.checkboxes.first.legend" id="left_legend"
                                @click="comparison.data.checkboxes.second.legend = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox"
+                        <input class="form-check-input checkbox-style" type="checkbox"
                                v-model="comparison.data.checkboxes.first.colour" id="left_colour"
                                @click="comparison.data.checkboxes.second.colour = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox" v-model="comparison.data.checkboxes.first.axes"
+                        <input class="form-check-input checkbox-style" type="checkbox" v-model="comparison.data.checkboxes.first.axes"
                                id="left_axes"
                                @click="comparison.data.checkboxes.second.axes = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox"
+                        <input class="form-check-input checkbox-style" type="checkbox"
                                v-model="comparison.data.checkboxes.first.element_sizes" id="left_element_sizes"
                                @click="comparison.data.checkboxes.second.element_sizes = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox"
-                               v-model="comparison.data.checkboxes.first.transparency" id="left_transparency"
-                               @click="comparison.data.checkboxes.second.transparency = false; comparison.validation.decision_selected = true;">
+                        <input class="form-check-input checkbox-style" type="checkbox"
+                               v-model="comparison.data.checkboxes.first.readability" id="left_readability"
+                               @click="comparison.data.checkboxes.second.readability = false; comparison.validation.decision_selected = true;">
                     </div>
                 </div>
 
-                <div class="checkboxes row text-center mt-2">
-                    <span class="col-2">Right plot</span>
+                <div class="checkboxes row mt-2">
+                    <span class="col-2">Right plot has better</span>
                     <div class="form-check col-2 my-checkbox">
-                        <input class="form-check-input text-center" type="checkbox"
+                        <input class="form-check-input text-center checkbox-style" type="checkbox"
                                v-model="comparison.data.checkboxes.second.legend" id="right_legend"
                                @click="comparison.data.checkboxes.first.legend = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox"
+                        <input class="form-check-input checkbox-style" type="checkbox"
                                v-model="comparison.data.checkboxes.second.colour" id="right_colour"
                                @click="comparison.data.checkboxes.first.colour = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox" v-model="comparison.data.checkboxes.second.axes"
+                        <input class="form-check-input checkbox-style" type="checkbox" v-model="comparison.data.checkboxes.second.axes"
                                id="right_axes"
                                @click="comparison.data.checkboxes.first.axes = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox"
+                        <input class="form-check-input checkbox-style" type="checkbox"
                                v-model="comparison.data.checkboxes.second.element_sizes" id="right_element_sizes"
                                @click="comparison.data.checkboxes.first.element_sizes = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
-                        <input class="form-check-input" type="checkbox"
-                               v-model="comparison.data.checkboxes.second.transparency" id="right_transparency"
-                               @click="comparison.data.checkboxes.first.transparency = false; comparison.validation.decision_selected = true;">
+                        <input class="form-check-input checkbox-style" type="checkbox"
+                               v-model="comparison.data.checkboxes.second.readability" id="right_readability"
+                               @click="comparison.data.checkboxes.first.readability = false; comparison.validation.decision_selected = true;">
                     </div>
                 </div>
             </div>
             <div v-if="!comparison.validation.decision_selected" class="mt-1 mb-1 error">
-                Please select atleast one consideration.
+                Please select at least one consideration.
             </div>
         </div>
 
         <span class="mt-1">Please leave any comments, feedback or problems you had with this task and help us improve it. Thank you!</span>
-        <div class="mt-2 mb-2">
-            <textarea v-model="feedback_message" placeholder="And comments, feedback, problems..." style="width: 50%; height: 10em;"></textarea>
+        <div class="mt-3 mb-3">
+            <textarea v-model="feedback_message" placeholder="Any comments, feedback, problems..." style="width: 50%; height: 10em;"></textarea>
         </div>
 
         <div v-if="error_submitting" class="mt-2 mb-2 error">
@@ -224,14 +253,14 @@
                                             colour: false,
                                             axes: false,
                                             element_sizes: false,
-                                            transparency: false
+                                            readability: false
                                         },
                                         second: {
                                             legend: false,
                                             colour: false,
                                             axes: false,
                                             element_sizes: false,
-                                            transparency: false
+                                            readability: false
                                         }
                                     }
                                 },
@@ -252,6 +281,15 @@
                     })
 
                     valid = this.comparisons.map(el => el.validation.plot_selected).every(el => el) && this.comparisons.map(el => el.validation.decision_selected).every(el => el)
+
+                    if(!valid) {
+                        invalid_el_data = this.comparisons.find(el => !el.validation.plot_selected || !el.validation.decision_selected)
+                        if(invalid_el_data) {
+                            element = document.getElementById(invalid_el_data.index)
+                            element.scrollIntoView()
+                        }
+                    }
+
                     return valid
                 },
                 select_comparison(comparison, plot) {
