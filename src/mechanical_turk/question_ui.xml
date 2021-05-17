@@ -185,12 +185,20 @@
                 Please select atleast one consideration.
             </div>
         </div>
-        <div v-if="error_submitting" class="mt-2 mb-1 error">
+
+        <span class="mt-1">Please leave any comments, feedback or problems you had with this task and help us improve it. Thank you!</span>
+        <div class="mt-2 mb-2">
+            <textarea v-model="feedback_message" placeholder="And comments, feedback, problems..." style="width: 50%; height: 10em;"></textarea>
+        </div>
+
+        <div v-if="error_submitting" class="mt-2 mb-2 error">
             Some of the comparisons are not completed. Please check for error messages and fill in the required fields.
         </div>
-        <button @click="handleFormSubmit()">Submit</button>
+        <button @click="handleFormSubmit()" type="button" class="btn btn-primary">Submit</button>
+        <!--TODO: Change action URL when pushing to production!-->
         <form method='post' id='mturk_form' action='https://workersandbox.mturk.com/mturk/externalSubmit'>
             <input type="hidden" id="inputData" name="data">
+            <input type="hidden" id="inputFeedback" name="feedback">
             <input type="hidden" id="inputAssignmentId" name="assignmentId">
         </form>
     </div>
@@ -201,6 +209,7 @@
             data: function () {
                 return {
                     error_submitting: false,
+                    feedback_message: "",
                     comparisons: "${plot_comparisons}"
                         .split("\t")
                         .map(x => x.split(";").map(el => el.trim()))
@@ -238,7 +247,6 @@
             },
             methods: {
                 validate() {
-                    console.log(JSON.parse(JSON.stringify(this.comparisons)))
                     this.comparisons = this.comparisons.map(function (val) {
                         val.validation.plot_selected = val.data.selected_plot != null
                         val.validation.decision_selected = Object.values(val.data.checkboxes.first).some(el => el) || Object.values(val.data.checkboxes.second).some(el => el)
@@ -246,7 +254,6 @@
                     })
 
                     valid = this.comparisons.map(el => el.validation.plot_selected).every(el => el) && this.comparisons.map(el => el.validation.decision_selected).every(el => el)
-                    console.log("Valid: ", valid)
                     return valid
                 },
                 select_comparison(comparison, plot) {
@@ -267,6 +274,7 @@
                     const urlParams = new URLSearchParams(window.location.search)
                     document.getElementById('inputAssignmentId').value = urlParams.get('assignmentId')
                     document.getElementById('inputData').value = JSON.stringify(data)
+                    document.getElementById('inputFeedback').value = JSON.stringify(this.feedback_message)
                     document.getElementById('mturk_form').submit()
                 }
             }
