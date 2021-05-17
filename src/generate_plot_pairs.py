@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import random
 from shutil import copyfile
+import matplotlib.pyplot as plt
+import random
 
 def sample_pictures(dir,n, new_dir):
     '''
@@ -77,8 +79,10 @@ def generate_plot_pairs(plot_types, sizes, k, dir, new_dir, csv_filename):
     for n, plot in zip(sizes, plot_types):
         sample_pictures(dir + '/' + plot, n, new_dir)
 
+    plot_names = os.listdir(new_dir)
+    random.shuffle(plot_names)
     #now we have all plots in new_dir, should we shuffle them?
-    names = [f for f in os.listdir(new_dir) if f.lower().endswith(('.jpg', '.jpeg'))]
+    names = [f for f in plot_names if f.lower().endswith(('.jpg', '.jpeg'))]
     write_csv(names, k, csv_filename)
 
 
@@ -90,15 +94,16 @@ if __name__ == '__main__':
     new_dir = 'C:/Users/Acer/Desktop/Data science/1 letnik/Project/filtered_images/sampled'
 
     #all the plot types you want to sample from
-    plot_types = ['bar_plot', 'box_plot', 'histogram', 'line_plot', 'scatter_plot']
+    plot_types = ['bar_plot', 'box_plot', 'histogram', 'line_plot', 'scatter_plot', 'pie_chart']
 
     #size of each sample
-    sizes = [2,1,1,2,2]
+    sizes = [10,10,10,10,10]
 
     #how many times each plot is compared, has to be even number
     k = 4
 
     #filename of the csv file, where plot pairs will be written
-    csv_filename = 'test_final'
+    csv_filename = 'test_mt'
 
     generate_plot_pairs(plot_types, sizes, k, dir, new_dir, csv_filename)
+
