@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script type='text/javascript' src='https://s3.amazonaws.com/mturk-public/externalHIT_v1.js'></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <style>
+        img {
+            width: 100%;
+            max-height: 700px;
+        }
+
+        .my-container {
+            padding-left: 10em;
+            padding-right: 10em;
+            padding-bottom: 3em;
+            padding-top: 3em;
+        }
+
+        .response-box {
+            margin-top: 1em;
+            padding: 1em;
+            border: 2px solid dodgerblue;
+            border-radius: 5px;
+        }
+
+        .checkboxes {
+            justify-content: center;
+        }
+
+        .my-checkbox {
+            display: flex;
+            align-items: center;
+            flex-flow: column wrap;
+        }
+
+        body {
+            background: white;
+        }
+
+        /* HIDE RADIO */
+        [type=radio] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        /* IMAGE STYLES */
+        [type=radio] + img {
+            cursor: pointer;
+        }
+
+        /* CHECKED STYLES */
+        [type=radio]:checked + img {
+            outline: 5px solid dodgerblue;
+            -moz-outline-radius: 5px;
+        }
+
+        .question-container {
+            border: 1px solid lightskyblue;
+            border-radius: 10px;
+            padding: 2em;
+            margin-bottom: 1em;
+        }
+
+        .image-comparison {
+        }
+
+        .error {
+            color: red;
+            font-weight: 600;
+        }
+        .text-strong {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .border-images {
+            padding-bottom: 1em;
+            padding-top: 1em;
+            border-bottom: 2px solid black;
+            border-top: 2px solid black;
+        }
+        .checkbox-style {
+            width: 1.5em;
+            height: 1.5em;
+        }
+        .info-box {
+            background-color: lightskyblue;
+            border: 1px solid transparent;
+            border-radius: 0.5em;
+        }
+        .text-important {
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+<!--  <form name='mturk_form' method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>-->
+<!--  <input type='hidden' value='' name='assignmentId' id='assignmentId'/>-->
+<!--  <h1>This is a test question</h1>-->
+<!--  <p><textarea name='comment' cols='80' rows='3'></textarea></p>-->
+<!--  <p><input type='submit' id='submitButton' value='Submit' /></p></form>-->
+<!--  <script language='Javascript'>turkSetAssignmentID();</script>-->
+<div class="my-container" id="app">
+    <div class="info-box p-3 mt-3 mb-3">
+        <div class="mb-2"><span class="text-important">Motivation:</span> Our goal is to create a system for automatic grading of visual plot quality. You will help us gather information about what makes a plot good.</div>
+        <div><span class="text-important">IMPORTANT:</span> The context of the plots and the description of the data they present is not given,
+            therefore you should <span class="text-important">compare the plots only through their visual properties</span>. You shouldn't try to understand the meaning of the plot or what it represents, as that is irrelevant for our purpose.
+        </div>
+    </div>
+    <div class="">
+
+        <div class="question-container" v-for="comparison in comparisons" :id="comparison.index">
+
+            <h2>Comparison {{comparison.index}}</h2>
+            <div class="mt-3 mb-3">
+                <span class="text-strong">Which plot is better?</span>  (click plot for selection)
+            </div>
+
+            <div class="image-comparison row border-images">
+                <label class="col-6 align-self-center" @click="select_comparison(comparison, 'left')">
+                    <input type="radio" :name="comparison.index" value="small">
+                    <img :src="comparison.first_plot_url">
+                </label>
+                <label class="col-6 align-self-center" @click="select_comparison(comparison, 'right')">
+                    <input type="radio" :name="comparison.index" value="small">
+                    <img :src="comparison.second_plot_url">
+                </label>
+            </div>
+            <div v-if="!comparison.validation.plot_selected" class="mt-1 mb-1 error">
+                Please select a plot.
+            </div>
+
+            <div class="mt-4 mb-1 text-strong">
+                <span class="mt-2 mb-2">What did you consider when making this decision?</span>
+            </div>
+            <div class="response-box">
+                <div class="category-names row text-center">
+                    <span class="col-2"></span>
+                    <span class="col">Legend</span>
+                    <span class="col">Colour choice</span>
+                    <span class="col">Axes</span>
+                    <span class="col">Element sizing</span>
+                    <span class="col">Readability</span>
+                </div>
+
+                <div class="checkboxes row mt-2">
+                    <span class="col-2">Left plot has better</span>
+                    <div class="form-check col-2 my-checkbox">
+                        <input class="form-check-input text-center checkbox-style" type="checkbox"
+                               v-model="comparison.data.checkboxes.first.legend" id="left_legend"
+                               @click="comparison.data.checkboxes.second.legend = false; comparison.validation.decision_selected = true;">
+                    </div>
+                    <div class="form-check col my-checkbox">
+                        <input class="form-check-input checkbox-style" type="checkbox"
+                               v-model="comparison.data.checkboxes.first.colour" id="left_colour"
+                               @click="comparison.data.checkboxes.second.colour = false; comparison.validation.decision_selected = true;">
+                    </div>
+                    <div class="form-check col my-checkbox">
+                        <input class="form-check-input checkbox-style" type="checkbox" v-model="comparison.data.checkboxes.first.axes"
+                               id="left_axes"
+                               @click="comparison.data.checkboxes.second.axes = false; comparison.validation.decision_selected = true;">
+                    </div>
+                    <div class="form-check col my-checkbox">
+                        <input class="form-check-input checkbox-style" type="checkbox"
+                               v-model="comparison.data.checkboxes.first.element_sizes" id="left_element_sizes"
+                               @click="comparison.data.checkboxes.second.element_sizes = false; comparison.validation.decision_selected = true;">
+                    </div>
+                    <div class="form-check col my-checkbox">
+                        <input class="form-check-input checkbox-style" type="checkbox"
+                               v-model="comparison.data.checkboxes.first.readability" id="left_readability"
+                               @click="comparison.data.checkboxes.second.readability = false; comparison.validation.decision_selected = true;">
+                    </div>
+                </div>
+
+                <div class="checkboxes row mt-2">
+                    <span class="col-2">Right plot has better</span>
+                    <div class="form-check col-2 my-checkbox">
+                        <input class="form-check-input text-center checkbox-style" type="checkbox"
+                               v-model="comparison.data.checkboxes.second.legend" id="right_legend"
+                               @click="comparison.data.checkboxes.first.legend = false; comparison.validation.decision_selected = true;">
+                    </div>
+                    <div class="form-check col my-checkbox">
+                        <input class="form-check-input checkbox-style" type="checkbox"
+                               v-model="comparison.data.checkboxes.second.colour" id="right_colour"
+                               @click="comparison.data.checkboxes.first.colour = false; comparison.validation.decision_selected = true;">
+                    </div>
+                    <div class="form-check col my-checkbox">
+                        <input class="form-check-input checkbox-style" type="checkbox" v-model="comparison.data.checkboxes.second.axes"
+                               id="right_axes"
+                               @click="comparison.data.checkboxes.first.axes = false; comparison.validation.decision_selected = true;">
+                    </div>
+                    <div class="form-check col my-checkbox">
+                        <input class="form-check-input checkbox-style" type="checkbox"
+                               v-model="comparison.data.checkboxes.second.element_sizes" id="right_element_sizes"
+                               @click="comparison.data.checkboxes.first.element_sizes = false; comparison.validation.decision_selected = true;">
+                    </div>
+                    <div class="form-check col my-checkbox">
+                        <input class="form-check-input checkbox-style" type="checkbox"
+                               v-model="comparison.data.checkboxes.second.readability" id="right_readability"
+                               @click="comparison.data.checkboxes.first.readability = false; comparison.validation.decision_selected = true;">
+                    </div>
+                </div>
+            </div>
+            <div v-if="!comparison.validation.decision_selected" class="mt-1 mb-1 error">
+                Please select at least one consideration.
+            </div>
+        </div>
+
+        <span class="mt-1">Please leave any comments, feedback or problems you had with this task and help us improve it. Thank you!</span>
+        <div class="mt-3 mb-3">
+            <textarea v-model="feedback_message" placeholder="Any comments, feedback, problems..." style="width: 50%; height: 10em;"></textarea>
+        </div>
+
+        <div v-if="error_submitting" class="mt-2 mb-2 error">
+            Some of the comparisons are not completed. Please check for error messages and fill in the required fields.
+        </div>
+        <button @click="handleFormSubmit()" type="button" class="btn btn-primary">Submit</button>
+        <!--TODO: Change action URL when pushing to production!-->
+        <form method='post' id='mturk_form' action='https://workersandbox.mturk.com/mturk/externalSubmit'>
+            <input type="hidden" id="inputData" name="data">
+            <input type="hidden" id="inputFeedback" name="feedback">
+            <input type="hidden" id="inputAssignmentId" name="assignmentId">
+        </form>
+    </div>
+</div>
+<script>
+    var app = new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    error_submitting: false,
+                    feedback_message: "",
+                    comparisons: "https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/0.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/1.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/9.jpeg; https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/7.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/5.jpeg"
+                        .split("\t")
+                        .map(x => x.split(";").map(el => el.trim()))
+                        .map(function (comparison, index) {
+                            return {
+                                index: index + 1,
+                                first_plot_url: comparison[0],
+                                second_plot_url: comparison[1],
+                                data: {
+                                    selected_plot: null,
+                                    checkboxes: {
+                                        first: {
+                                            legend: false,
+                                            colour: false,
+                                            axes: false,
+                                            element_sizes: false,
+                                            readability: false
+                                        },
+                                        second: {
+                                            legend: false,
+                                            colour: false,
+                                            axes: false,
+                                            element_sizes: false,
+                                            readability: false
+                                        }
+                                    }
+                                },
+                                validation: {
+                                    plot_selected: true,
+                                    decision_selected: true
+                                }
+                            }
+                        })
+                }
+            },
+            methods: {
+                validate() {
+                    this.comparisons = this.comparisons.map(function (val) {
+                        val.validation.plot_selected = val.data.selected_plot != null
+                        val.validation.decision_selected = Object.values(val.data.checkboxes.first).some(el => el) || Object.values(val.data.checkboxes.second).some(el => el)
+                        return val
+                    })
+
+                    valid = this.comparisons.map(el => el.validation.plot_selected).every(el => el) && this.comparisons.map(el => el.validation.decision_selected).every(el => el)
+
+                    if(!valid) {
+                        invalid_el_data = this.comparisons.find(el => !el.validation.plot_selected || !el.validation.decision_selected)
+                        if(invalid_el_data) {
+                            element = document.getElementById(invalid_el_data.index)
+                            element.scrollIntoView()
+                        }
+                    }
+
+                    return valid
+                },
+                select_comparison(comparison, plot) {
+                    comparison.data.selected_plot = plot
+                    comparison.validation.plot_selected = true
+                },
+                handleFormSubmit() {
+                    this.error_submitting = false
+                    if (!this.validate()) {
+                        this.error_submitting = true
+                        return
+                    }
+
+                    const data = this.comparisons.map(el => {
+                        return el.data
+                    })
+
+                    const urlParams = new URLSearchParams(window.location.search)
+                    document.getElementById('inputAssignmentId').value = urlParams.get('assignmentId')
+                    document.getElementById('inputData').value = JSON.stringify(data)
+                    document.getElementById('inputFeedback').value = JSON.stringify(this.feedback_message)
+                    document.getElementById('mturk_form').submit()
+                }
+            }
+        }
+    )
+</script>
+</body>
+</html>
