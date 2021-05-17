@@ -37,6 +37,10 @@
             flex-flow: column wrap;
         }
 
+        body {
+            background: white;
+        }
+
         /* HIDE RADIO */
         [type=radio] {
             position: absolute;
@@ -93,11 +97,11 @@
             <div class="image-comparison row">
                 <label class="col-6 align-self-center" @click="select_comparison(comparison, 'left')">
                     <input type="radio" :name="comparison.index" value="small">
-                    <img src="0.jpeg">
+                    <img :src="comparison.first_plot_url">
                 </label>
                 <label class="col-6 align-self-center" @click="select_comparison(comparison, 'right')">
                     <input type="radio" :name="comparison.index" value="small">
-                    <img src="1.jpeg">
+                    <img :src="comparison.second_plot_url">
                 </label>
             </div>
             <div v-if="!comparison.validation.plot_selected" class="mt-1 mb-1 error">
@@ -131,7 +135,8 @@
                     </div>
                     <div class="form-check col my-checkbox">
                         <input class="form-check-input" type="checkbox" v-model="comparison.data.checkboxes.first.axes"
-                               id="left_axes" @click="comparison.data.checkboxes.second.axes = false; comparison.validation.decision_selected = true;">
+                               id="left_axes"
+                               @click="comparison.data.checkboxes.second.axes = false; comparison.validation.decision_selected = true;">
                     </div>
                     <div class="form-check col my-checkbox">
                         <input class="form-check-input" type="checkbox"
@@ -175,48 +180,57 @@
                 </div>
             </div>
             <div v-if="!comparison.validation.decision_selected" class="mt-1 mb-1 error">
-                    Please select atleast one consideration.
-                </div>
+                Please select atleast one consideration.
+            </div>
         </div>
 
         <button @click="validate()">Validate</button>
+        <form method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>
+            <p>Describe the current weather where you live</p>
+            <p><textarea name="weather" cols="80" rows="3"></textarea></p>
+            <p><input type="submit" id="submitButton" class="btn btn-primary" value="Submit"/></p>
+        </form>
     </div>
 </div>
 <script>
-    <!--    TODO: data fetching, data sending-->
     var app = new Vue({
             el: '#app',
             data: function () {
                 return {
                     message: 'Hello Vue!',
-                    comparisons: [...Array(2).keys()].map(function (key) {
-                        return {
-                            index: key,
-                            data: {
-                                selected_plot: null,
-                                checkboxes: {
-                                    first: {
-                                        legend: false,
-                                        colour: false,
-                                        axes: false,
-                                        element_sizes: false,
-                                        transparency: false
-                                    },
-                                    second: {
-                                        legend: false,
-                                        colour: false,
-                                        axes: false,
-                                        element_sizes: false,
-                                        transparency: false
+                    comparisons: "https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/0.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/1.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/9.jpeg; https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/7.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/5.jpeg"
+                        .split("\t")
+                        .map(x => x.split(";").map(el => el.trim()))
+                        .map(function (comparison, index) {
+                            return {
+                                index: index + 1,
+                                first_plot_url: comparison[0],
+                                second_plot_url: comparison[1],
+                                data: {
+                                    selected_plot: null,
+                                    checkboxes: {
+                                        first: {
+                                            legend: false,
+                                            colour: false,
+                                            axes: false,
+                                            element_sizes: false,
+                                            transparency: false
+                                        },
+                                        second: {
+                                            legend: false,
+                                            colour: false,
+                                            axes: false,
+                                            element_sizes: false,
+                                            transparency: false
+                                        }
                                     }
+                                },
+                                validation: {
+                                    plot_selected: true,
+                                    decision_selected: true
                                 }
-                            },
-                            validation: {
-                                plot_selected: true,
-                                decision_selected: true
                             }
-                        }
-                    })
+                        })
                 }
             },
             methods: {

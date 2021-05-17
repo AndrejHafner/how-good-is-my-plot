@@ -1,7 +1,7 @@
 import sys
 import boto3
 
-from utils import get_mt_client
+from utils import get_mt_client, environments
 
 client = get_mt_client()
 # Test that you can connect to the API by checking your account balance
@@ -11,7 +11,7 @@ user_balance = client.get_account_balance()
 print("Your account balance is {}".format(user_balance['AvailableBalance']))
 
 # The question we ask the workers is contained in this file.
-question_sample = open("my_question.xml", "r").read()
+question_sample = open("question_ui.xml", "r").read()
 
 # Example of using qualification to restrict responses to Workers who have had
 # at least 80% of their assignments approved. See:
@@ -28,12 +28,15 @@ response = client.create_hit(
     MaxAssignments=3,
     LifetimeInSeconds=600,
     AssignmentDurationInSeconds=600,
-    Reward=mturk_environment['reward'],
-    Title='TEST',
+    Reward="0.00",
+    Title="Plot comparisons - test",
     Keywords='question, answer, research',
     Description='Answer a simple question. Created from mturk-code-samples.',
     Question=question_sample,
-    QualificationRequirements=worker_requirements,
+    QualificationRequirements=worker_requirements
+    # HITLayoutParameters=[
+    #     {"Name": "n_plots", "Value": "3"}
+    # ]
 )
 
 # The response included several fields that will be helpful later
@@ -42,6 +45,6 @@ hit_id = response['HIT']['HITId']
 print("\nCreated HIT: {}".format(hit_id))
 
 print("\nYou can work the HIT here:")
-print(mturk_environment['preview'] + "?groupId={}".format(hit_type_id))
+print(environments["sandbox"]['preview'] + "?groupId={}".format(hit_type_id))
 print("\nAnd see results here:")
-print(mturk_environment['manage'])
+print(environments["sandbox"]['manage'])
