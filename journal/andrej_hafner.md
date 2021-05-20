@@ -28,7 +28,8 @@
 * 12\. (3h): Created script for removing duplicate images, researching how MT works.
 * 16\. (9h): Research how MT works, creating custom HTML questionnaire with Vue.
 * 17\. (9h): Added template on MT, implemented submission and added image storage on AWS S3. Also created scripts for batch .csv creation. Long meeting with teammates, polishing the questionnaire and testing on MT sandbox.
-
+* 19\. (3h): Team meeting before publishing the first MT questionnaire. Started working on limiting the number of HITs that an unique worker can solve.
+* 20\. (2h): Finished working on the script for limiting, deployed to sandbox MT.
 
 
 

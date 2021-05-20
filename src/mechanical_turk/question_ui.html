@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="//uniqueturker.myleott.com/lib.js" type="text/javascript"></script>
     <script type='text/javascript' src='https://s3.amazonaws.com/mturk-public/externalHIT_v1.js'></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -94,6 +95,11 @@
             border: 1px solid transparent;
             border-radius: 0.5em;
         }
+        .info-box.orange {
+            background-color: orange;
+            border: 1px solid transparent;
+            border-radius: 0.5em;
+        }
         .text-important {
             font-weight: 600;
         }
@@ -108,13 +114,18 @@
 <!--  <p><input type='submit' id='submitButton' value='Submit' /></p></form>-->
 <!--  <script language='Javascript'>turkSetAssignmentID();</script>-->
 <div class="my-container" id="app">
-    <div class="info-box p-3 mt-3 mb-3">
+    <div v-if="hit_limit_reached" class="info-box orange p-3">
+        <span class="text-important">You have reached the HIT limit for this task.</span></br>
+        Due to the nature of our task, we limit how many HITs an unique worker can solve in order to get as much variety in the collected data.
+        Please click "Return", since you won't be able to solve any more HITs. Thank you for your understanding.
+    </div>
+    <div class="info-box p-3 mt-3 mb-3" v-if="questionnaire_visible">
         <div class="mb-2"><span class="text-important">Motivation:</span> Our goal is to create a system for automatic grading of visual plot quality. You will help us gather information about what makes a plot good.</div>
         <div><span class="text-important">IMPORTANT:</span> The context of the plots and the description of the data they present is not given,
             therefore you should <span class="text-important">compare the plots only through their visual properties</span>. You shouldn't try to understand the meaning of the plot or what it represents, as that is irrelevant for our purpose.
         </div>
     </div>
-    <div class="">
+    <div v-if="questionnaire_visible">
 
         <div class="question-container" v-for="comparison in comparisons" :id="comparison.index">
 
@@ -236,8 +247,11 @@
             data: function () {
                 return {
                     error_submitting: false,
+                    questionnaire_visible:false,
+                    hit_limit_reached:false,
                     feedback_message: "",
-                    comparisons: "https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/0.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/1.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/9.jpeg; https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/7.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/10.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/5.jpeg"
+                    batch_id: "a2ddcf71b510c84371199268375f09cd",
+                    comparisons: "https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_efb_10095.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_fmfm_11683.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_frib_71125.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_fmfb_1926.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_fmfm_3592.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_fmfm_6212.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_frim_56097.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_frib_29311.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_fmfb_2195.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/99_efm_28546.jpeg"
                         .split("\t")
                         .map(x => x.split(";").map(el => el.trim()))
                         .map(function (comparison, index) {
@@ -271,6 +285,11 @@
                             }
                         })
                 }
+            },
+            mounted() {
+                limit_reached = UTWorkerLimitReached(this.batch_id)
+                this.questionnaire_visible = !limit_reached
+                this.hit_limit_reached = limit_reached
             },
             methods: {
                 validate() {
