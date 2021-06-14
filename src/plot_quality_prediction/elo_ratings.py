@@ -1,40 +1,55 @@
 import numpy as np
 import pandas as pd
-from scipy.optimize import minimize, fmin_l_bfgs_b
+from scipy.optimize import minimize
 import matplotlib.pyplot as plt
 
 
 def tgt_fn(x, matches):
     xr = np.hstack([0, x])
-    prob = (1 / (1 + np.exp(-(xr[matches[:, 0]] - xr[matches[:, 1]]))))
+    prob = (1 / (1 + np.exp(xr[matches[:, 0]] - xr[matches[:, 1]])))
     loss = matches[:, 2] * np.log(prob) + (1 - matches[:, 2]) * np.log(1 - prob)
     return -np.sum(loss)
 
 
+def tgt_grad(x, matches):
+    xr = np.hstack([0, x])
+    prob = (1 / (1 + np.exp(xr[matches[:, 0]] - xr[matches[:, 1]])))
+    dt = prob - matches[:, 2]
+    grad_x = np.zeros(len(x))
+    for i in range(len(x)):
+        grad_x[i] = - np.sum(dt[np.where(matches[:, 1] == i + 1)]) + np.sum(dt[np.where(matches[:, 0] == i + 1)])
+    return - grad_x
+
+
 if __name__ == '__main__':
 
-    ### TOY DATASET
+    # TOY DATASET
     n = 10  # number of objects
     m = 1000  # number of games
     z = np.random.uniform(-1, 1, n)  # latent strengths of objects
     games = np.zeros([m, 3], dtype=int)
 
     for i in range(m):
-        id1 = np.random.randint(0, 9)
-        id2 = np.random.randint(0, 9)
+        id1 = np.random.randint(0, 10)
+        id2 = np.random.randint(0, 10)
         while id1 == id2:
             id2 = np.random.randint(0, 9)
-        win = np.random.uniform(0, 1) < 1 / (1 + np.exp(-(z[id1] - z[id2])))
+        win = np.random.uniform(0, 1) < 1 / (1 + np.exp(z[id1] - z[id2]))
         games[i, :] = id1, id2, win
 
     x0 = np.zeros(n - 1)
 
-    res = minimize(tgt_fn, x0, games, method='L-BFGS-B')
+    res = minimize(tgt_fn, x0, games, method='L-BFGS-B', jac=tgt_grad)
 
+    # testing for toy data
     plt.plot(z, np.hstack([0, res['x']]), '.')
     plt.show()
 
-    # plot matches
+    for i in range(10):
+        print(z[i], np.mean(
+            np.hstack([1 - games[np.where(games[:, 0] == i), 2][0], games[np.where(games[:, 1] == i), 2][0]])))
+
+    # PLOT RATINGS
     scores = pd.read_csv('data/final_scores.csv')
     all_matches = pd.read_csv('data/all_matches.csv')
 
@@ -46,8 +61,9 @@ if __name__ == '__main__':
 
     x0 = np.zeros(scores.shape[0] - 1)
 
-    print(tgt_fn(np.zeros(scores.shape[0]), matches))
-    # res = minimize(tgt_fn, x0, matches, method='L-BFGS-B', options={'maxfun': 50000})
-    res = minimize(tgt_fn, x0, matches, method='CG')
-    # res = fmin_l_bfgs_b(tgt_fn, x0, args=[matches], approx_grad=True)
-    s = 0
+    res = minimize(tgt_fn, x0, matches, method='L-BFGS-B', jac=tgt_grad)
+    ratings = np.hstack([0, res['x']])
+
+    # mean ratings for plots with same number of wins
+    for i in range(10):
+        print(i, np.mean(ratings[scores[scores['score'] == i].index.values]))

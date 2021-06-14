@@ -63,4 +63,4 @@ the best loss, not the best accuracy. Overviewing report and discussing question
 * 4\. (1h): Discussion with teammates about the survey, how to generate pairs, decided to just focus on line plots.
 * 5\. (1h): Studying Swiss system  
 * 13\. (3h): Brainstorming about final models and analysis, meeting with teammates, looking at the results from MT and discussing final models. Writing summary on Slack
-* 14\. (6h): Studying and implementing ELO ratings. Making plans for final models. 
+* 14\. (10h): Studying and implementing ELO ratings. Making plans for final models. Making embeddings for MT images.
