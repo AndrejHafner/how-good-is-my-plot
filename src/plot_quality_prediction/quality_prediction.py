@@ -27,4 +27,6 @@ prediction = svr.predict(X_test_small)
 # evaluation
 y_val = y_test.values
 print(mse(prediction, y_val))
+
+# predicting only zeros (mean value)
 print(mse(np.repeat(0, len(y_test)), y_val))

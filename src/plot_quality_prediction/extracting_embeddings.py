@@ -1,14 +1,13 @@
 import torch
 import numpy as np
 import pandas as pd
-import joblib
 
-from torch.utils.data import DataLoader
-from torchvision import models, transforms, datasets
+from torchvision import models
 from torchvision.models.resnet import Bottleneck
 import torch.nn as nn
 
 from src.plot_type_classification.filter_extracted_images import scrapped_image_generator
+
 
 class ResNet101Extract(models.ResNet):
 
@@ -70,7 +69,7 @@ def make_embeddings(path, fine_tuned=False):
         emb = model.feature_extract_avg_pool(photo).cpu().detach().numpy()
         embeddings[name] = emb[0]
 
-    scores = pd.read_csv('data/final_scores.csv')
+    scores = pd.read_csv('data/scores_elo.csv', index_col=0)
 
     for name, emb in zip(embeddings.keys(), embeddings.values()):
         scores.loc[scores['plot_name'] == name, [f'x{i}' for i in range(2048)]] = emb
@@ -81,32 +80,9 @@ def make_embeddings(path, fine_tuned=False):
         scores.to_csv('data/scores_with_embeddings.csv')
 
 
-# def embeddings_to_dataframe(embeddings_file):
-#     """
-#     Reading the embeddings file and saving it to dataframe
-#     :param embeddings_file: json file in which the embeddings are saved
-#     :return: dataframe of embeddings
-#     """
-#     embeddings = joblib.load(embeddings_file)
-#     col = ['class', 'cons_nr'] + [f'x{i}' for i in range(2048)]
-#     df = pd.DataFrame(columns=col)
-#
-#     for c in embeddings.keys():
-#         n = len(embeddings[c])
-#         embeddings_matrix = np.stack(embeddings[c], axis=0)
-#         classes = np.stack([np.repeat(c, n), 2 * np.arange(n) + 1]).T
-#         combined = np.concatenate([classes, embeddings_matrix], axis=1)
-#         df_add = pd.DataFrame(combined, columns=col)
-#
-#         df = df.append(df_add)
-#
-#     return df
-
-
 if __name__ == '__main__':
 
     make_embeddings('D:/project/final')
 
     make_embeddings('D:/project/final', True)
-
 
