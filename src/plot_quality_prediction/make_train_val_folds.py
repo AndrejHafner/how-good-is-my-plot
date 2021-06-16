@@ -9,13 +9,13 @@ from sklearn.model_selection import KFold
 
 # Script for copying all plots into correct folders in final folds.
 plots_path = 'D:/project/final'
-dst_path = 'D:/project/final_folds'
+dst_path = 'D:/project/final_splits'
 
 nr_folds = 5
 
 for f in range(nr_folds):
-    Path(os.path.join(dst_path, f'fold{f+1}', 'train')).mkdir(parents=True, exist_ok=True)
-    Path(os.path.join(dst_path, f'fold{f + 1}', 'val')).mkdir(parents=True, exist_ok=True)
+    Path(os.path.join(dst_path, f'split{f+1}', 'train')).mkdir(parents=True, exist_ok=True)
+    Path(os.path.join(dst_path, f'split{f + 1}', 'val')).mkdir(parents=True, exist_ok=True)
 
 Path(os.path.join(dst_path, 'test')).mkdir(parents=True, exist_ok=True)
 
@@ -35,9 +35,9 @@ for train_id, val_id in kf.split(train_plots):
     val = train_plots[val_id]
 
     for plot in train:
-        shutil.copy(os.path.join(plots_path, plot), os.path.join(dst_path, f'fold{fold}', 'train', plot))
+        shutil.copy(os.path.join(plots_path, plot), os.path.join(dst_path, f'split{fold}', 'train', plot))
     for plot in val:
-        shutil.copy(os.path.join(plots_path, plot), os.path.join(dst_path, f'fold{fold}', 'val', plot))
+        shutil.copy(os.path.join(plots_path, plot), os.path.join(dst_path, f'split{fold}', 'val', plot))
 
 for plot in test_plots:
     shutil.copy(os.path.join(plots_path, plot), os.path.join(dst_path, 'test', plot))
