@@ -67,4 +67,6 @@ the best loss, not the best accuracy. Overviewing report and discussing question
   Had a lot of problems with convergence of logistic regression for ratings calculation. Solved it with analytic 
   calculation of gradients.
 * 15\. (6h): Trying different models, finalizing ELO ratings and embeddings extraction. Setting up regression CNN training on Google Colab.
-* 16\. (): Implementing custom dataloader for regression data
+* 16\. (11h): Implementing custom dataloader for regression data, training ResNet101 for plot quality prediction. 
+  Cross validation for training parameters selection, final testing of CNN. Discussion about subcategories analysis.
+  
