@@ -1,23 +1,12 @@
 import pandas as pd
 import numpy as np
 
-import os
-from pathlib import Path
-import shutil
-
 from sklearn.model_selection import KFold
 
 # Script for copying all plots into correct folders in final folds.
 plots_path = 'D:/project/final'
-dst_path = 'D:/project/final_splits'
 
 nr_folds = 5
-
-for f in range(nr_folds):
-    Path(os.path.join(dst_path, f'split{f+1}', 'train')).mkdir(parents=True, exist_ok=True)
-    Path(os.path.join(dst_path, f'split{f + 1}', 'val')).mkdir(parents=True, exist_ok=True)
-
-Path(os.path.join(dst_path, 'test')).mkdir(parents=True, exist_ok=True)
 
 test_data = pd.read_csv('data/test_data.csv', index_col=0)
 test_plots = test_data['plot_name'].values
@@ -39,13 +28,9 @@ for train_id, val_id in kf.split(train_plots):
     train_scores = scores[scores['plot_name'].isin(train)]
     val_scores = scores[scores['plot_name'].isin(val)]
 
-    train_scores.to_csv(os.path.join(dst_path, f'split{fold}', 'train', 'split_scores_elo.csv'), index=False)
-    val_scores.to_csv(os.path.join(dst_path, f'split{fold}', 'val', 'split_scores_elo.csv'), index=False)
+    train_scores.to_csv(f'data/csv_splits/split{fold}_train.csv', index=False)
+    val_scores.to_csv(f'data/csv_splits/split{fold}_val.csv', index=False)
 
-    for plot in train:
-        shutil.copy(os.path.join(plots_path, plot), os.path.join(dst_path, f'split{fold}', 'train', plot))
-    for plot in val:
-        shutil.copy(os.path.join(plots_path, plot), os.path.join(dst_path, f'split{fold}', 'val', plot))
+test_scores = scores[scores['plot_name'].isin(test_plots)]
+test_scores.to_csv(f'data/csv_splits/test.csv', index=False)
 
-for plot in test_plots:
-    shutil.copy(os.path.join(plots_path, plot), os.path.join(dst_path, 'test', plot))
