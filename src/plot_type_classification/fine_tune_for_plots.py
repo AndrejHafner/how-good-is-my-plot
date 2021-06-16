@@ -9,8 +9,10 @@ import time
 import os
 import copy
 
+from regression_dataset import RegressionDataset
 
-def train_model(model, dataloader, criterion, optimizer, device, num_epochs=50):
+
+def train_model(model, dataloader, criterion, optimizer, device, num_epochs=50, regression=False):
     """
     Training model on data from dataloader with given optimizer, optimizing by criterion for num_epochs epochs.
     :param model: model we are optimizing
@@ -55,7 +57,8 @@ def train_model(model, dataloader, criterion, optimizer, device, num_epochs=50):
                     outputs = model(inputs)
                     loss = criterion(outputs, labels)
 
-                    _, preds = torch.max(outputs, 1)
+                    if not regression:
+                        _, preds = torch.max(outputs, 1)
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
@@ -64,12 +67,16 @@ def train_model(model, dataloader, criterion, optimizer, device, num_epochs=50):
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
-                running_corrects += torch.sum(preds == labels.data)
+                if not regression:
+                    running_corrects += torch.sum(preds == labels.data)
 
             epoch_loss = running_loss / len(dataloader[phase].dataset)
-            epoch_acc = running_corrects.double() / len(dataloader[phase].dataset)
+            if regression:
+                print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
-            print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
+            else:
+                epoch_acc = running_corrects.double() / len(dataloader[phase].dataset)
+                print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             # deep copy the model
             if phase == 'val' and epoch_loss < best_loss:
@@ -95,7 +102,7 @@ def initialize_model(num_classes, use_pretrained=True):
     :param use_pretrained: if True, the initialized model uses weights pretrained on ImageNet dataset
     :return: model
     """
-    model_ft = models.resnet101(pretrained=use_pretrained)
+    model_ft = models.resnet18(pretrained=use_pretrained)
     num_ftrs = model_ft.fc.in_features
     model_ft.fc = nn.Linear(num_ftrs, num_classes)
 
@@ -112,10 +119,10 @@ def initialize_model(num_classes, use_pretrained=True):
 if __name__ == '__main__':
 
     # Data directory on which you want to train the model
-    data_dir = "./data/proba"
+    data_dir = "../plot_quality_prediction/data/proba"
 
     # Number of classes in the dataset
-    num_classes = 8
+    num_classes = 1
 
     # Batch size for training (change depending on how much memory you have)
     batch_size = 48
@@ -144,7 +151,9 @@ if __name__ == '__main__':
     print("Initializing Datasets and Dataloaders...")
 
     # Create training and validation datasets
-    image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train', 'val']}
+    # image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train', 'val']}
+    image_datasets = {x: RegressionDataset(os.path.join(data_dir, x), '../plot_quality_prediction/data/scores_elo.csv',
+                                           data_transforms[x]) for x in ['train', 'val']}
 
     # Create training and validation dataloaders
     dataloaders_dict = {
@@ -169,5 +178,5 @@ if __name__ == '__main__':
     # Train and evaluate
     model_ft = train_model(model_ft, dataloaders_dict, criterion, optimizer_ft, device, num_epochs=num_epochs)
 
-    torch.save(model_ft.state_dict(), f"cnn_weights/resnet101_ft.pth")
+    # torch.save(model_ft.state_dict(), f"cnn_weights/resnet101_ft.pth")
 
