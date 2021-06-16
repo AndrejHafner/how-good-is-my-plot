@@ -9,7 +9,7 @@ import time
 import os
 import copy
 
-from regression_dataset import RegressionDataset
+from src.plot_quality_prediction.regression_dataset import RegressionDataset
 
 
 def train_model(model, dataloader, criterion, optimizer, device, num_epochs=50, regression=False):
