@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import os
 import torch
 from torch.utils.data import Dataset
@@ -16,7 +17,7 @@ class RegressionDataset(Dataset):
             transform (callable, optional): Optional transform to be applied
                 on a sample.
         """
-        self.elo_scores = pd.read_csv(csv_file, index_col=0)
+        self.elo_scores = pd.read_csv(csv_file)
         self.plot_dir = plot_dir
         self.transform = transform
 
@@ -35,4 +36,5 @@ class RegressionDataset(Dataset):
 
         target = self.elo_scores.loc[idx, 'elo']
 
-        return torch.unsqueeze(image, 0), target
+        # return torch.unsqueeze(image, 0), target
+        return image, np.array([target], dtype=np.float32)
