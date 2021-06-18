@@ -63,4 +63,13 @@ the best loss, not the best accuracy. Overviewing report and discussing question
 * 4\. (1h): Discussion with teammates about the survey, how to generate pairs, decided to just focus on line plots.
 * 5\. (1h): Studying Swiss system  
 * 13\. (3h): Brainstorming about final models and analysis, meeting with teammates, looking at the results from MT and discussing final models. Writing summary on Slack
-* 14\. (10h): Studying and implementing ELO ratings. Making plans for final models. Making embeddings for MT images.
+* 14\. (10h): Studying and implementing ELO ratings. Making plans for final models. Making embeddings for MT images. 
+  Had a lot of problems with convergence of logistic regression for ratings calculation. Solved it with analytic 
+  calculation of gradients.
+* 15\. (6h): Trying different models, finalizing ELO ratings and embeddings extraction. Setting up regression CNN training on Google Colab.
+* 16\. (12h): Implementing custom dataloader for regression data, training ResNet101 for plot quality prediction. 
+  Cross validation for training parameters selection, final testing of CNN. Discussion about subcategories analysis.
+  Writing skeleton for the report.
+* 17\. (6h): Writting report and finalising Colab training.
+* 18\. (2h): Final evaluation of classification model, finalising report.
+  

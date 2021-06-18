@@ -5,6 +5,11 @@ import matplotlib.pyplot as plt
 
 
 def tgt_fn(x, matches):
+    """
+    Cost we will optimize to get the ELO ratings.
+    :param x: current ratings of plots
+    :param matches: all pairings of plots and their outcomes
+    """
     xr = np.hstack([0, x])
     prob = (1 / (1 + np.exp(xr[matches[:, 0]] - xr[matches[:, 1]])))
     loss = matches[:, 2] * np.log(prob) + (1 - matches[:, 2]) * np.log(1 - prob)
@@ -12,6 +17,11 @@ def tgt_fn(x, matches):
 
 
 def tgt_grad(x, matches):
+    """
+    Gradient of the cost we will optimize to get the ELO ratings.
+    :param x: current ratings of plots
+    :param matches: all pairings of plots and their outcomes
+    """
     xr = np.hstack([0, x])
     prob = (1 / (1 + np.exp(xr[matches[:, 0]] - xr[matches[:, 1]])))
     dt = prob - matches[:, 2]
@@ -64,6 +74,12 @@ if __name__ == '__main__':
     res = minimize(tgt_fn, x0, matches, method='L-BFGS-B', jac=tgt_grad)
     ratings = np.hstack([0, res['x']])
 
-    # mean ratings for plots with same number of wins
+    # mean ratings for plots with same number of wins -> test if ratings are correct
     for i in range(10):
         print(i, np.mean(ratings[scores[scores['score'] == i].index.values]))
+
+    # standardized = (ratings - np.mean(ratings)) / np.std(ratings)
+
+    # writing to csv
+    scores['elo'] = ratings
+    scores.to_csv('data/scores_elo.csv')

@@ -295,3 +295,5 @@ src/plot_scrapping/ul_thesis_scrapper/chromedriver.exe
 src/plot_scrapping/pdf_image_extraction/pdfs
 src/plot_scrapping/pdf_image_extraction/extracted_images
 src/mechanical_turk/env.py
+
+src/plot_quality_prediction/data
