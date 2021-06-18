@@ -24,7 +24,7 @@
 * 27.4\. (2h): Had a discussion with team members, created 3 more questionarries and send them to friends. Also solved one.
 * 28.4\. (4h): Had a discussion with teammates. Went to the beggining and looked at all bar plots and histograms and sort them again in the right group. Also went through all other plots to check for some outliers. We have decided to put only the most obvious plots in train set. We have started to check at the results of the questionarries.
 
-## May 2021 (?)
+## May 2021 (44h)
 
 * 1\. (4h): Looked at Amazon Mechanical Turk and tried to make a test survey. Had some troubles with understanding the procedure to do that. Found a different site names Qualttrics where you can make your survey and then export it to Amazon Mechanical Turk.
 * 2\. (4h): Had a discussion with team mates about a structure of a survey we will put on Amazon Mechanical Turk. Looked at various tutorials how to make a survey. Had some problems with how to put different plots in survey for different people. Made a test survey.
@@ -43,7 +43,7 @@
 * 31\. (1h): Discussion with teammates about first official survey and how we will rank the plots.
 
 
-## June 2021 (?)
+## June 2021 (37h)
 
 * 4\. (1h): Discussion with teammates about the survey, how to generate pairs, decided to just focus on one type of plots - line plots. 
 * 5\. (1h): Implemented plots generator that takes into account the scores of the plots. 
@@ -52,3 +52,7 @@
 * 10\. (2h): Generated pair plots for third batch. Had a meeting with teammates about how are we going to continue with our work when all 9 batches will be over. Added function that checks the pairs generated, so none of the pairs are repeated. Generated pairs for the batch number 4.
 * 11\., 12\. (30 min): Generated batches 5-9.
 * 13\. (1h 30min): Had a meeting with teammates. We have discussed further work and quickly looked at the results we got.
+* 15\. (4h): Wrote a script that performs CV on different models for different parameters, to find the best one for our data. We have decided to use embedings and transform the data with PCA.
+* 16\. (10h): Tried several different models for predicting. So far nothing works, predictions are quite similar to the dummy predictor - predicting the mean value. Analized the data from the batches - categories workers selected. Draw some plots. Readability is the most correlated category.
+* 17\. (5h): Gathered all the results for the report. Together with team mates we have written final report and send it to our mentors. 
+* 18\. (8h): Checked the classifications of the plots and calculate the numbers for evaluating how the classificator works. Corrected report. Polished and commented the code. Edit the github repository.

@@ -31,8 +31,8 @@ def tgt_grad(x, matches):
     return - grad_x
 
 
-if __name__ == '__main__':
-
+def test_toy():
+    """Testing our derivation of ELO ratings on toy dataset."""
     # TOY DATASET
     n = 10  # number of objects
     m = 1000  # number of games
@@ -59,6 +59,9 @@ if __name__ == '__main__':
         print(z[i], np.mean(
             np.hstack([1 - games[np.where(games[:, 0] == i), 2][0], games[np.where(games[:, 1] == i), 2][0]])))
 
+
+if __name__ == '__main__':
+
     # PLOT RATINGS
     scores = pd.read_csv('data/final_scores.csv')
     all_matches = pd.read_csv('data/all_matches.csv')
@@ -71,14 +74,13 @@ if __name__ == '__main__':
 
     x0 = np.zeros(scores.shape[0] - 1)
 
+    # logistic regression for ELO ratings
     res = minimize(tgt_fn, x0, matches, method='L-BFGS-B', jac=tgt_grad)
     ratings = np.hstack([0, res['x']])
 
     # mean ratings for plots with same number of wins -> test if ratings are correct
     for i in range(10):
         print(i, np.mean(ratings[scores[scores['score'] == i].index.values]))
-
-    # standardized = (ratings - np.mean(ratings)) / np.std(ratings)
 
     # writing to csv
     scores['elo'] = ratings
