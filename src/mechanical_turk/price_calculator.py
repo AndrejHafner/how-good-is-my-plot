@@ -58,7 +58,7 @@ if __name__ == '__main__':
     calculate_final_price(worker_price, master_worker_price, csv_filename, pairs_per_questioner)
     '''
 
-    for size in [10,100,195]:
+    for size in [5,10,15,20]:
         for k in [4,6,10,15]:
             # Here write the dir, where folders with all plots are
             dir = 'C:/Users/Acer/Desktop/Data science/1 letnik/Project/filtered_images'
@@ -71,14 +71,15 @@ if __name__ == '__main__':
 
             # size of each sample
             sizes = [size for _ in range(len(plot_types))]
-            print(f'Number of plots {sum(sizes)}')
+            print(f'Number of each plot {size}')
+            print(f'Number of all plots {sum(sizes)}')
             print(f'Each plot is shown {k} times')
 
             # how many times each plot is compared, has to be even number
             #k = 6
 
             # filename of the csv file, where plot pairs will be written
-            csv_filename = 'test_final'
+            csv_filename = 'test_test'
 
             generate_plot_pairs(plot_types, sizes, k, dir, new_dir, csv_filename)
 

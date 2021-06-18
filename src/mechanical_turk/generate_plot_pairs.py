@@ -1,3 +1,6 @@
+# This code was not used at the end. Instead of this, we generated pairs with generate_pairs_based_on_scores.py
+
+
 import networkx as nx
 import pandas as pd
 import os
@@ -12,7 +15,7 @@ def sample_pictures(dir,n, new_dir):
     :param dir: dir path
     :param n: int, sample size
     '''
-    files = [f for f in os.listdir(dir)]
+    files = [f for f in os.listdir(dir) if f.lower().endswith(('.jpg', '.jpeg'))]
     sample = random.sample(files, n)
     for file in sample:
         copyfile(dir + '/' + file, new_dir + '/' + file)
@@ -55,6 +58,7 @@ def write_csv(list_names, k, csv_filename):
     G = ring_graph(n,k)
     G = rename_nodes(G,list_names)
     pairs = list(G.edges)
+    random.shuffle(pairs)
     df = pd.DataFrame(columns=['first','second'])
     for first,second,_ in pairs:
         df = df.append({'first':first, 'second':second}, ignore_index=True)
@@ -87,23 +91,25 @@ def generate_plot_pairs(plot_types, sizes, k, dir, new_dir, csv_filename):
 
 
 if __name__ == '__main__':
+
+    random.seed(0)
     #Here write the dir, where folders with all plots are
-    dir = 'C:/Users/Acer/Desktop/Data science/1 letnik/Project/filtered_images'
+    dir = 'C:/Users/Acer/Desktop/Data science/1 letnik/Project/data/filtered_images'
 
     #Here write the dir, where you want your sampled files to be copied to
-    new_dir = 'C:/Users/Acer/Desktop/Data science/1 letnik/Project/filtered_images/sampled'
+    new_dir = 'C:/Users/Acer/Desktop/Data science/1 letnik/Project/data/filtered_images/sampled_toy'
 
     #all the plot types you want to sample from
-    plot_types = ['bar_plot', 'box_plot', 'histogram', 'line_plot', 'scatter_plot', 'pie_chart']
+    plot_types = ['bar_plot/sampled', 'box_plot', 'histogram', 'line_plot/sampled', 'scatter_plot', 'pie_chart']
 
     #size of each sample
-    sizes = [10,10,10,10,10]
+    sizes = [15,15,15,15,15,15]
 
     #how many times each plot is compared, has to be even number
-    k = 4
+    k = 6
 
     #filename of the csv file, where plot pairs will be written
-    csv_filename = 'test_mt'
+    csv_filename = 'toy_mt'
 
     generate_plot_pairs(plot_types, sizes, k, dir, new_dir, csv_filename)
 
