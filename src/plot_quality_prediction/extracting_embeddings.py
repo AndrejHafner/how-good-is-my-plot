@@ -1,5 +1,4 @@
 import torch
-import numpy as np
 import pandas as pd
 
 from torchvision import models
@@ -48,6 +47,7 @@ def make_embeddings(path, fine_tuned=False):
     """
     Make embeddings for all images from folder given with path.
     :param path: path to folder of images we want to make embeddings of
+    :param fine_tuned: if True, the embeddings are extracted from the fine-tuned network for plot type classification
     """
 
     if fine_tuned:
@@ -82,7 +82,9 @@ def make_embeddings(path, fine_tuned=False):
 
 if __name__ == '__main__':
 
+    # extracting embeddings from network only pretrained on ImageNet
     make_embeddings('D:/project/final')
 
+    # extracting embeddings from network fine-tuned for plot type classification
     make_embeddings('D:/project/final', True)
 

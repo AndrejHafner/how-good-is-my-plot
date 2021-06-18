@@ -36,5 +36,4 @@ class RegressionDataset(Dataset):
 
         target = self.elo_scores.loc[idx, 'elo']
 
-        # return torch.unsqueeze(image, 0), target
         return image, np.array([target], dtype=np.float32)

@@ -3,7 +3,8 @@ import numpy as np
 
 from sklearn.model_selection import KFold, train_test_split
 
-# Script for copying all plots into correct folders in final folds.
+# Script for creating csv-s needed for regression dataset generator.
+
 plots_path = 'D:/project/final'
 
 nr_folds = 5
