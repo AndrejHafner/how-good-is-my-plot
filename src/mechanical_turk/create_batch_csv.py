@@ -7,11 +7,11 @@ def chunk(it, size):
     return iter(lambda: tuple(islice(it, size)), ())
 
 if __name__ == '__main__':
-    batch_name = "prod_batch_1_first_test"
+    batch_name = "batch_1_prod"
     bucket_url = f"https://plot-comparisons.s3.eu-central-1.amazonaws.com/{batch_name}/"
-    pairs_per_hit = 20
-    plot_comparisons_csv = "./batches/prod_batch_1_first_test.csv"
-    save_name = "./batches/prod_batch_1_first_test_deploy.csv"
+    pairs_per_hit = 10
+    plot_comparisons_csv = "./batches/batch_9.csv"
+    save_name = "./batches/batch_9_prod.csv"
 
     pairs = [(row["first"], row["second"]) for _, row in pd.read_csv(plot_comparisons_csv).iterrows()]
     random.shuffle(pairs)

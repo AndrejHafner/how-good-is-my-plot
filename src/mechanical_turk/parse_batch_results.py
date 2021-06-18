@@ -35,8 +35,8 @@ def parse_results(df):
     return data
 
 if __name__ == '__main__':
-    df = pd.read_csv("./batches/results/prod_batch_1_test_results.csv")
+    df = pd.read_csv("./batches/results/swiss_sys_run_9.csv")
     data = parse_results(df)
 
     results_df = pd.DataFrame(data)
-    results_df.to_csv("./batches/results/prod_batch_1_parsed.csv", index=False)
+    results_df.to_csv("./batches/results/swiss_system/swiss_sys_run_9_parsed.csv", index=False)
