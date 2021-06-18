@@ -21,11 +21,12 @@ training images to Google Drive, to folder [```how_good_is_my_plot```](https://d
 If you want to run the training, you need to copy this folder to your drive, and connect it to Colab.
 You should then upload the notebook ```plot_classification.ipynb``` to Colab and run it. 
 
-## MT
+## Amazon Mechanical Turk
 
-You can see how did the survey on Amazon's MT look like on picture below.
-
-![primer](link do slike)
+Amazon Mechanical turk was used for crowdsourcing the questionnaires about the plot quality.
+Swiss-system tournament was used in which pairwise comparisons between plots were evaluated by workers.
+Each worker had to solve 10 plot comparisons. Below is an example of a comparison, in wh
+![Amazon Mechanical Turk questionnaire](https://github.com/AndrejHafner/how-good-is-my-plot/blob/develop/src/figures/questionnaire.png)
 
 
 You can calculate how much is certain survey going to cost you with ```price_calculator.py```.
