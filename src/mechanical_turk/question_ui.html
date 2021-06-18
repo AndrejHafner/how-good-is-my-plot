@@ -16,8 +16,8 @@
         }
 
         .my-container {
-            padding-left: 10em;
-            padding-right: 10em;
+            width: 70%;
+            margin: 0 auto;
             padding-bottom: 3em;
             padding-top: 3em;
         }
@@ -107,12 +107,6 @@
 </head>
 
 <body>
-<!--  <form name='mturk_form' method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>-->
-<!--  <input type='hidden' value='' name='assignmentId' id='assignmentId'/>-->
-<!--  <h1>This is a test question</h1>-->
-<!--  <p><textarea name='comment' cols='80' rows='3'></textarea></p>-->
-<!--  <p><input type='submit' id='submitButton' value='Submit' /></p></form>-->
-<!--  <script language='Javascript'>turkSetAssignmentID();</script>-->
 <div class="my-container" id="app">
     <div v-if="hit_limit_reached" class="info-box orange p-3">
         <span class="text-important">You have reached the HIT limit for this task.</span></br>
@@ -148,8 +142,9 @@
                 Please select a plot.
             </div>
 
-            <div class="mt-4 mb-1 text-strong">
-                <span class="mt-2 mb-2">What did you consider when making this decision?</span>
+            <div class="mt-4 mb-3 ">
+                <span class=" text-strong">What did you consider when making this decision?</span>
+                (check only those boxes that were important in the decision)
             </div>
             <div class="response-box">
                 <div class="category-names row text-center">
@@ -233,8 +228,8 @@
             Some of the comparisons are not completed. Please check for error messages and fill in the required fields.
         </div>
         <button @click="handleFormSubmit()" type="button" class="btn btn-primary">Submit</button>
-        <!--TODO: Change action URL when pushing to production!-->
-        <form method='post' id='mturk_form' action='https://workersandbox.mturk.com/mturk/externalSubmit'>
+        <!--IMPORTANT: Change action URL when pushing to production!-->
+        <form method='post' id='mturk_form' action='https://www.mturk.com/mturk/externalSubmit'>
             <input type="hidden" id="inputData" name="data">
             <input type="hidden" id="inputFeedback" name="feedback">
             <input type="hidden" id="inputAssignmentId" name="assignmentId">
@@ -250,8 +245,10 @@
                     questionnaire_visible:false,
                     hit_limit_reached:false,
                     feedback_message: "",
-                    batch_id: "a2ddcf71b510c84371199268375f09cd",
-                    comparisons: "https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_efb_10095.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_fmfm_11683.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_frib_71125.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_fmfb_1926.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_fmfm_3592.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_fmfm_6212.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_frim_56097.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_frib_29311.jpeg\thttps://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/100_fmfb_2195.jpeg;https://plot-comparisons.s3.eu-central-1.amazonaws.com/test_batch/99_efm_28546.jpeg"
+                    // UniqueTurker ID
+                    batch_id: "c5d8d0040fe851ad11cd7a80b9bc8f74",
+                    // Url parsing for the plots from the input CSV on MT
+                    comparisons: "${plot_comparisons}"
                         .split("\t")
                         .map(x => x.split(";").map(el => el.trim()))
                         .map(function (comparison, index) {
@@ -287,7 +284,6 @@
                 }
             },
             mounted() {
-                // Credits: http://uniqueturker.myleott.com/
                 limit_reached = UTWorkerLimitReached(this.batch_id)
                 this.questionnaire_visible = !limit_reached
                 this.hit_limit_reached = limit_reached
@@ -317,6 +313,8 @@
                     comparison.validation.plot_selected = true
                 },
                 handleFormSubmit() {
+                    // Submit the questionnaire to the MT
+
                     this.error_submitting = false
                     if (!this.validate()) {
                         this.error_submitting = true

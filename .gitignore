@@ -297,3 +297,4 @@ src/plot_scrapping/pdf_image_extraction/extracted_images
 src/mechanical_turk/env.py
 
 src/plot_quality_prediction/data
+src/mechanical_turk/batches
