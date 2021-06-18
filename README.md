@@ -75,11 +75,18 @@ Below you can see the density of the ELO ratings calculated on the dataset that 
 
 ![ELO count](https://github.com/AndrejHafner/how-good-is-my-plot/blob/develop/src/figures/elo_count.png)
 
-This is the image that recieved the highest ELO score (109):
+Below is the image that received the highest ELO score (109):
 
-This image recieved median ELO score ():
+![109 elo score](https://github.com/AndrejHafner/how-good-is-my-plot/blob/develop/src/figures/9points.jpeg)
+
+This image received median ELO score (5):
+
+![Median elo score](https://github.com/AndrejHafner/how-good-is-my-plot/blob/develop/src/figures/median_elo.jpeg)
 
 This is the image that received the lowest ELO score (-86):
+
+![-86 elo score](https://github.com/AndrejHafner/how-good-is-my-plot/blob/develop/src/figures/0points.jpeg)
+
 
 ### Predicting quality from embeddings
 Embeddings can be generated with ```extracting_embeddings.py```. 
