@@ -17,11 +17,12 @@ For scrapping the PDF's from https://repozitorij.uni-lj.si, use the code at ```u
 ## Classificator
 
 
-## MT
+## Amazon Mechanical Turk
 
-You can see how did the survey on Amazon's MT look like on picture below.
-
-![primer](link do slike)
+Amazon Mechanical turk was used for crowdsourcing the questionnaires about the plot quality.
+Swiss-system tournament was used in which pairwise comparisons between plots were evaluated by workers.
+Each worker had to solve 10 plot comparisons. Below is an example of a comparison, in wh
+![Amazon Mechanical Turk questionnaire](https://github.com/AndrejHafner/how-good-is-my-plot/blob/develop/src/figures/questionnaire.png)
 
 
 You can calculate how much is certain survey going to cost you with ```price_calculator.py```.
