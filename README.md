@@ -79,7 +79,7 @@ This is the image that recieved the highest ELO score (109):
 
 This image recieved median ELO score ():
 
-This is the image that recieved the lowest ELO score (-86):
+This is the image that received the lowest ELO score (-86):
 
 ### Predicting quality from embeddings
 Embeddings can be generated with ```extracting_embeddings.py```. 
