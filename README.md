@@ -10,7 +10,7 @@ Statistical plots are an essential tool for visual presentation of information, 
 ### Bing
 For downloading plots from Bing, we used the code in ```bing_images_scraper.py```. In ```__main__``` function you write the plot names in ```queries_to_search``` list and run the code.
 ### UL Thesis Scrapper
-For scrapping the PDF's from https://repozitorij.uni-lj.si, use the code at ```ul_thesis_scrapper.py```. In the ```__main__``` function you specify ```faculty``` parameter for which faculty you want to scrapp the PDF's and ```files``` list where you wrote the types of work you want to download (bachelor's, master's, phd's). 
+For scrapping the PDF's from https://repozitorij.uni-lj.si, use the code at ```ul_thesis_scrapper.py```. In the ```__main__``` function you specify ```faculty``` parameter for which faculty you want to scrapp the PDF's and ```files``` list where you write the types of work you want to download (bachelor's, master's, phd's). 
 
 ### PDF image extractor
 
