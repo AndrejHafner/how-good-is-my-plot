@@ -75,15 +75,17 @@ Below you can see the density of the ELO ratings calculated on the dataset that 
 
 ![ELO count](https://github.com/AndrejHafner/how-good-is-my-plot/blob/develop/src/figures/elo_count.png)
 
-Below is the image that received the highest ELO score (109):
+Below are three images that received the maximum, median and minimum ELO score.
+
+Maximum ELO: 109
 
 ![109 elo score](https://github.com/AndrejHafner/how-good-is-my-plot/blob/develop/src/figures/9points.jpeg)
 
-This image received median ELO score (5):
+Median ELO: 5
 
 ![Median elo score](https://github.com/AndrejHafner/how-good-is-my-plot/blob/develop/src/figures/median_elo.jpeg)
 
-This is the image that received the lowest ELO score (-86):
+Minimum ELO: -86
 
 ![-86 elo score](https://github.com/AndrejHafner/how-good-is-my-plot/blob/develop/src/figures/0points.jpeg)
 
