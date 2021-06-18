@@ -22,7 +22,7 @@
 * 27\. (2h): Discussion with teammates about the questionnaires, making and sending questionnaires.
 * 28\. (4h): Gathering information from answered questionnaires and discussion with teammates. Creating scripts for image filtering.
 
-## May 2021 (TODO)
+## May 2021 (34h)
 
 * 3\. (2h): Meeting, discussion with teammates after meeting.
 * 12\. (3h): Created script for removing duplicate images, researching how MT works.
@@ -32,7 +32,18 @@
 * 20\. (2h): Finished working on the script for limiting, deployed to sandbox MT.
 * 24\. (3h): MTurk test batch deployment, fixes on the UI.
 * 26\. (2h): Created script for parsing result csv, checked the results.
+* 31\. (1h): Meeting with teammates about the first survey and plot ranking.
 
+## June 2021 (18.5h)
+
+* 4\. (1h): Meeting with teammates about plot comparison generation
+* 5\. (3h): Batch testing on the MT sandbox, bug fixing and trying out how long does it take for a person to solve one questionnaire.
+* 7\. (1h): First batch deployment.
+* 8\. (1h): First batch result parsing and preparing for the second batch.
+* 10\. - 12\. (2h): Batch uploading and result parsing (the rest of the batches).
+* 13\. (1h 30min): Meeting with teammates about the results of the tournament.
+* 17\. (4h): Project report writing and fixing.
+* 18\. (5h): Project report writing, code refactoring and repository cleaning.
 
 
 
