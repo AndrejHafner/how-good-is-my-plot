@@ -42,12 +42,34 @@ the best loss, not the best accuracy. Overviewing report and discussing question
 * 27\. (2h): Discussion with teammates, making and sending questionnaires.
 * 28\. (4h): Discussion, answering questionnaire, gathering information from answered questionnaires.
 
-## May 2021 (?h)
+## May 2021 (25h)
 
-* 3\. (1h 30min): Meeting, discussion
+* 3\. (2h): Meeting, discussion
 * 8\. (3h): Sorting and uploading images for next (last?) iteration of training.
 * 9\. (4h): Training with different parameters, scrapping more faculties (FMF, EF).
 * 10\. (2h): Scraping, extracting, filtering images.
-* 11\. (2h): Running classifications, generalizing code
-* 12\. (1h 30min): Identifying and removing duplicates, discussion
-* 13\. (30min): Copying filtered images into one folder, adding them to drive to begin hand filtering
+* 11\. (2h): Running classifications, generalizing code.
+* 12\. (1h 30min): Identifying and removing duplicates, discussion.
+* 13\. (30min): Copying filtered images into one folder, adding them to drive to begin hand filtering.
+* 17\. (4h): Final assembling of MT questionnaire and discussion about next steps.
+* 19\. (1h): Discussion about MT
+* 25\. (1h): Discussion with teammates. We quickly looked at the results from the test survey and talked about how to 
+  pursue further. We decided that we should analyze the results, to see if anything interesting already pops up, so we 
+  could take that into account when we put the main survey on MT.
+* 30\. (2h): Reading about tournament systems, how to rank objects on pairwise comparisons. Swiss system seems best.
+* 31\. (2h): Discussion with teammates about first official survey and how we will rank the plots.
+
+## June 2021 (?h)
+* 4\. (1h): Discussion with teammates about the survey, how to generate pairs, decided to just focus on line plots.
+* 5\. (1h): Studying Swiss system  
+* 13\. (3h): Brainstorming about final models and analysis, meeting with teammates, looking at the results from MT and discussing final models. Writing summary on Slack
+* 14\. (10h): Studying and implementing ELO ratings. Making plans for final models. Making embeddings for MT images. 
+  Had a lot of problems with convergence of logistic regression for ratings calculation. Solved it with analytic 
+  calculation of gradients.
+* 15\. (6h): Trying different models, finalizing ELO ratings and embeddings extraction. Setting up regression CNN training on Google Colab.
+* 16\. (12h): Implementing custom dataloader for regression data, training ResNet101 for plot quality prediction. 
+  Cross validation for training parameters selection, final testing of CNN. Discussion about subcategories analysis.
+  Writing skeleton for the report.
+* 17\. (6h): Writting report and finalising Colab training.
+* 18\. (2h): Final evaluation of classification model, finalising report.
+  

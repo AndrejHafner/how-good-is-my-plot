@@ -27,11 +27,28 @@
 ## May 2021 (?)
 
 * 1\. (4h): Looked at Amazon Mechanical Turk and tried to make a test survey. Had some troubles with understanding the procedure to do that. Found a different site names Qualttrics where you can make your survey and then export it to Amazon Mechanical Turk.
-* 2\. (4h): Had a discussion with teammates about a structure of a survey we will put on Amazon Mechanical Turk. Looked at various tutorials how to make a survey. Had some problems with how to put different plots in survey for different people. Made a test survey.
+* 2\. (4h): Had a discussion with team mates about a structure of a survey we will put on Amazon Mechanical Turk. Looked at various tutorials how to make a survey. Had some problems with how to put different plots in survey for different people. Made a test survey.
 * 3\. (4h): Test a test survey - I have answered various questions to see how much time does it take to answer them, so we will know how much to pay for workers. Had a meeting with teammates and menthors. After that I have changed a survey as we have discussed. Then tried to integrate it to MT, but I wasn't successful (yet).
 * 9\. (2h): Correct and add some things for ul_thesis_scrapper so it worked also for FMF and EF.
 * 12\. (3h): Had a discussion with team mater about our future work. We have also discussed on how we will generate pairs of plots for amazon mechanical workers. Started with implementation of our idea (ring graph connected to n nearest neighbours).
 * 13\. (2h): Finished with generating pairs.
 * 14\. (5h): Removed duplicates of plots, and went through all of the plots and checked each one if it is right classified.
 * 15\. (2h): Wrote price calculator, so we could easily check how much we have to pay for a survey, depending on number of plots, questioner sizes ...
-* 17\. (4h): Had a meeting with teammates. We have finaly made a questioner on Amazon Mechanical Turk and we have take some time to polish it, write an introduction, decide on layering, colors, ... We have put together a test sample of plots, creates csv, ... to put everithing on test survey on MT. Had a debate on pricing, calculated some final prices depending on parameters, number of plots, how many times each plot is shown, workers price ,....
+* 17\. (4h): Had a meeting with team mates. We have finaly made a questioner on Amazon Mechanical Turk and we have take some time to polish it, write an introduction, decide on layering, colors, ... We have put together a test sample of plots, creates csv, ... to put everithing on test survey on MT. Had a debate on pricing, calculated some final prices depending on parameters, number of plots, how many times each plot is shown, workers price ,....
+* 19\. (1h): Had a meeting with team mates about the survey and how we will test if the workers are answering "right".
+* 20\. (4h): When checking the classified plots, I did not save all the wrong classified plots and therefore could not report on model accuracy. We had to do that again. Wrote a simple script that iterates through all plots and moves plot depending on which key you press.
+* 21\. (4h): Sampled the largest plots, because there is too many of them and continue with checking them. Prepared the data for our test survey that we are going to publish to see if everytihing is as we imagined. Sampled 15 plots from every type, generates pairs, created csv ...
+* 25\. (1h): HAd a discussion with teammates. We quickly looked at the results from the test survey and talked about how to pursue further. We decided that we should analize the results, to see if anything interesting already pops up, so we could take that into accout when we put the main survey on MT.
+* 26\. (3h): Started with analysing the results from test survey. Made some basic visualisations.
+* 31\. (1h): Discussion with teammates about first official survey and how we will rank the plots.
+
+
+## June 2021 (?)
+
+* 4\. (1h): Discussion with teammates about the survey, how to generate pairs, decided to just focus on one type of plots - line plots. 
+* 5\. (1h): Implemented plots generator that takes into account the scores of the plots. 
+* 7\. (3h): Filtered the data for the batch. There are some plots that we do not want to have in the survey and we will take it out, for instance, several plots on one image. There are also some rare cases where some plots came from the same article and are almost identitcal. Then generate plot pairs for the 500 line plots that are finally going into first batch!
+* 8\. (1h): Looked at the results of the first batch, parse the data and based on the scores from the first batch, generated the pairs for the second batch.
+* 10\. (2h): Generated pair plots for third batch. Had a meeting with teammates about how are we going to continue with our work when all 9 batches will be over. Added function that checks the pairs generated, so none of the pairs are repeated. Generated pairs for the batch number 4.
+* 11\., 12\. (30 min): Generated batches 5-9.
+* 13\. (1h 30min): Had a meeting with teammates. We have discussed further work and quickly looked at the results we got.
